@@ -7,7 +7,7 @@ export default function Header({ children }) {
   const router = useRouter();
 
   return (
-    <div className="h-screen w-screen bg-gray-100">
+    <div className="h-screen w-screen bg-white">
       <header className="h-1/10 bg-purple-800 flex flex-row justify-between items-center px-14">
         <button
           type="button"
@@ -18,7 +18,13 @@ export default function Header({ children }) {
         >
           <img src="../../LogoNewBook.png" height={100} width={140}></img>
         </button>
-        <button type="button" className="hover:text-yellow-400 cursor-pointer ">
+        <button
+          type="button"
+          className="hover:text-amber-400 cursor-pointer "
+          onClick={() => {
+            router.push("/Carrinho");
+          }}
+        >
           <div className="flex flex-col items-center space-y-1 ">
             <ShoppingCart height={30} width={30}></ShoppingCart>
             <p>Carrinho</p>
@@ -32,19 +38,25 @@ export default function Header({ children }) {
             maxLength={50}
           ></input>
           <button type="button ">
-            <Search className="text-gray-800 ml-auto hover:text-yellow-400 cursor-pointer"></Search>
+            <Search className="text-gray-800 ml-auto hover:text-amber-400 cursor-pointer"></Search>
           </button>
         </div>
-        <button type="button" className="hover:text-yellow-400 cursor-pointer">
+        <button type="button" className="hover:text-amber-400 cursor-pointer">
           <Bell height={27} width={27}></Bell>
         </button>
-        <button type="button" className="hover:text-yellow-400 cursor-pointer">
+        <button type="button" className="hover:text-amber-400 cursor-pointer">
           <div className="flex flex-col items-center space-y-1">
             <Album height={30} width={30}></Album>
             <p>Compras</p>
           </div>
         </button>
-        <button type="button">
+        <button
+          type="button"
+          className="hover:text-amber-400 cursor-pointer"
+          onClick={() => {
+            router.push("/Perfil");
+          }}
+        >
           <div className="flex flex-col items-center space-y-1">
             <User height={30} width={30}></User>
             <p>Minha conta</p>
