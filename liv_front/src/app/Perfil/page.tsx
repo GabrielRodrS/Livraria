@@ -11,7 +11,7 @@ export default function Perfil() {
           </div>
           <div className="shadow-2xl rounded-b-md">
             <div className="h-3/5 w-full flex flex-col pl-10 py-5 space-y-5">
-              <p className="font-bold text-xl  text-purple-800">
+              <p className="font-bold text-xl  text-purple-800 ">
                 Dados de usuário:
               </p>
               <div className="text-black flex flex-row space-x-2 items-center">
@@ -55,10 +55,10 @@ export default function Perfil() {
                 </button>
               </div>
               <p className="font-bold text-amber-600">
-                Gênero de livro favorito: Ficcção Cientítica
+                Gênero de livro favorito: Ficcção Cientítica.
               </p>
             </div>
-            <div className="h-1/5 w-full flex flex-row items-center justify-center shadow-2xl rounded-b-md py-5 space-x-20 text-black ">
+            <div className="h-1/5 w-full flex flex-row items-center justify-center shadow-2xl rounded-b-md py-5 space-x-20 text-black bg-gray-300 ">
               <button
                 type="button"
                 className="bg-red-500 py-2 px-3 rounded-md hover:text-white cursor-pointer "

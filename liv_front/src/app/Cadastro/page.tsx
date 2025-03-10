@@ -16,7 +16,7 @@ export default function Cadastro() {
 
   const titulo = "Cadastrar";
 
-  const formatarTelefone = (valor) => {
+  const formatarTelefone = (valor: string): string => {
     valor = valor.replace(/\D/g, "");
 
     if (valor.length > 10) {
@@ -30,7 +30,7 @@ export default function Cadastro() {
     }
   };
 
-  const realizarCadastro = async (e) => {
+  const realizarCadastro = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (nome === "" || tel === "" || email === "" || senha === "") {

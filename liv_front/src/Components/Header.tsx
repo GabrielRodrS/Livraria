@@ -1,13 +1,29 @@
 "use client";
 
 import { Search, Bell, ShoppingCart, Album, User } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { ReactNode, useState } from "react";
+import GuiaNotf from "./GuiaNotf";
 
-export default function Header({ children }) {
+interface HeaderProps {
+  children: ReactNode;
+}
+
+export default function Header({ children }: HeaderProps) {
   const router = useRouter();
 
+  const [notf, setNotf] = useState(false);
+
   return (
-    <div className="h-screen w-screen bg-white">
+    <div
+      className="h-screen w-screen bg-white"
+      onClick={() => {
+        if (notf == true) {
+          setNotf(false);
+        }
+      }}
+    >
       <header className="h-1/10 bg-purple-800 flex flex-row justify-between items-center px-14">
         <button
           type="button"
@@ -16,7 +32,12 @@ export default function Header({ children }) {
             router.push("/InterfaceP");
           }}
         >
-          <img src="../../LogoNewBook.png" height={100} width={140}></img>
+          <Image
+            src="/LogoNewBook.png"
+            height={100}
+            width={140}
+            alt="Logo do site"
+          ></Image>
         </button>
         <button
           type="button"
@@ -37,14 +58,25 @@ export default function Header({ children }) {
             className="flex-grow mx-1 outline-none"
             maxLength={50}
           ></input>
-          <button type="button ">
+          <button type="button">
             <Search className="text-gray-800 ml-auto hover:text-amber-400 cursor-pointer"></Search>
           </button>
         </div>
         <button type="button" className="hover:text-amber-400 cursor-pointer">
-          <Bell height={27} width={27}></Bell>
+          <Bell height={27} width={27} onClick={() => setNotf(true)}></Bell>
+          {notf && (
+            <div className="notification-container">
+              <GuiaNotf />
+            </div>
+          )}
         </button>
-        <button type="button" className="hover:text-amber-400 cursor-pointer">
+        <button
+          type="button"
+          className="hover:text-amber-400 cursor-pointer"
+          onClick={() => {
+            router.push("/Compras");
+          }}
+        >
           <div className="flex flex-col items-center space-y-1">
             <Album height={30} width={30}></Album>
             <p>Compras</p>

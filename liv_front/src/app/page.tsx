@@ -1,5 +1,5 @@
 "use client";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import Formulario from "../Components/Formulario";
 import { useRouter } from "next/navigation";
 
@@ -13,7 +13,7 @@ export default function Login() {
 
   const router = useRouter();
 
-  const realizarLogin = async (e: FormEvent) => {
+  const realizarLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (email === "" || senha === "") {

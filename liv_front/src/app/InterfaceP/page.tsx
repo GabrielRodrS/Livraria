@@ -1,13 +1,11 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FileSpreadsheet } from "lucide-react";
 
 import Header from "../../Components/Header";
 
 export default function InterfaceP() {
-  const router = useRouter();
   const [quantPag, setQuantPag] = useState(0);
 
   return (
