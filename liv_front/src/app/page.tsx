@@ -75,7 +75,7 @@ export default function Login() {
 
           {msg && <p className="font-bold text-red-700 mt-8">{msg}</p>}
           <button
-            className="bg-yellow-500 py-2 px-3 rounded-md cursor-pointer hover:text-gray-700 mt-5"
+            className="bg-yellow-500 py-2 px-3 rounded-md cursor-pointer text-black hover:text-gray-700 mt-5"
             type="button"
             onClick={() => {
               router.push("/RecuperarSenha");

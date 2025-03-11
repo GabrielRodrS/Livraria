@@ -10,8 +10,8 @@ export default function Perfil() {
     <Header>
       <main className="flex h-9/10 w-full items-center justify-center">
         <section className=" w-2/6 h-5/6">
-          <div className="h-1/5 w-full bg-gray-300 flex flex-col items-center justify-center rounded-t-md">
-            <User height={40} width={40} className="text-black"></User>
+          <div className="h-1/5 w-full bg-gray-900 flex flex-col items-center justify-center rounded-t-md">
+            <User height={40} width={40} className="text-amber-400"></User>
           </div>
           <div className="shadow-2xl rounded-b-md">
             <div className="h-3/5 w-full flex flex-col pl-10 py-5 space-y-5">

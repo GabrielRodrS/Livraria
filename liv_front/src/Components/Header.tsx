@@ -1,10 +1,9 @@
 "use client";
 
-import { Search, Bell, ShoppingCart, Album, User } from "lucide-react";
+import { Search, ShoppingCart, Album, User } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { ReactNode, useState } from "react";
-import GuiaNotf from "./GuiaNotf";
+import { ReactNode } from "react";
 
 interface HeaderProps {
   children: ReactNode;
@@ -13,18 +12,9 @@ interface HeaderProps {
 export default function Header({ children }: HeaderProps) {
   const router = useRouter();
 
-  const [notf, setNotf] = useState(false);
-
   return (
-    <div
-      className="h-screen w-screen bg-white"
-      onClick={() => {
-        if (notf == true) {
-          setNotf(false);
-        }
-      }}
-    >
-      <header className="h-1/10 bg-purple-800 flex flex-row justify-between items-center px-14">
+    <div className="h-screen w-screen bg-white overflow-hidden">
+      <header className="h-1/11 bg-purple-800 flex flex-row justify-between items-center px-12 border-b-1 border-black">
         <button
           type="button"
           className="cursor-pointer"
@@ -62,14 +52,7 @@ export default function Header({ children }: HeaderProps) {
             <Search className="text-gray-800 ml-auto hover:text-amber-400 cursor-pointer"></Search>
           </button>
         </div>
-        <button type="button" className="hover:text-amber-400 cursor-pointer">
-          <Bell height={27} width={27} onClick={() => setNotf(true)}></Bell>
-          {notf && (
-            <div className="notification-container">
-              <GuiaNotf />
-            </div>
-          )}
-        </button>
+
         <button
           type="button"
           className="hover:text-amber-400 cursor-pointer"
