@@ -1,7 +1,11 @@
-import { User } from "lucide-react";
+"use client";
 import Header from "../../Components/Header";
+import { User } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Perfil() {
+  const router = useRouter();
+
   return (
     <Header>
       <main className="flex h-9/10 w-full items-center justify-center">
@@ -20,6 +24,7 @@ export default function Perfil() {
                 <button
                   type="button"
                   className="py-1 px-2 bg-amber-400 cursor-pointer rounded-md hover:text-white"
+                  onClick={() => router.push("AltNome")}
                 >
                   alterar
                 </button>
@@ -30,6 +35,7 @@ export default function Perfil() {
                 <button
                   type="button"
                   className="py-1 px-2 bg-amber-400 cursor-pointer rounded-md hover:text-white"
+                  onClick={() => router.push("AltTelefone")}
                 >
                   alterar
                 </button>
@@ -40,6 +46,7 @@ export default function Perfil() {
                 <button
                   type="button"
                   className="py-1 px-2 bg-amber-400 cursor-pointer rounded-md hover:text-white"
+                  onClick={() => router.push("AltEmail")}
                 >
                   alterar
                 </button>
@@ -50,6 +57,7 @@ export default function Perfil() {
                 <button
                   type="button"
                   className="py-1 px-2 bg-amber-400 cursor-pointer rounded-md hover:text-white"
+                  onClick={() => router.push("AltSenha")}
                 >
                   alterar
                 </button>
@@ -58,20 +66,26 @@ export default function Perfil() {
                 Gênero de livro favorito: Ficcção Cientítica.
               </p>
             </div>
-            <div className="h-1/5 w-full flex flex-row items-center justify-center shadow-2xl rounded-b-md py-5 space-x-20 text-black bg-gray-300 ">
-              <button
-                type="button"
-                className="bg-red-500 py-2 px-3 rounded-md hover:text-white cursor-pointer "
-              >
-                Excluir conta
-              </button>
-              <button
-                type="button"
-                className="bg-amber-300 py-2 px-3 rounded-md hover:text-white cursor-pointer "
-              >
-                Sair da sessão
-              </button>
-            </div>
+          </div>
+          <div className="h-1/5 w-full flex flex-row items-center justify-center shadow-2xl rounded-b-md py-5 space-x-20 text-black bg-gray-300 ">
+            <button
+              type="button"
+              className="bg-red-500 py-2 px-3 rounded-md hover:text-white cursor-pointer "
+              onClick={() => {
+                router.push("/ExcluirConta");
+              }}
+            >
+              Excluir conta
+            </button>
+            <button
+              type="button"
+              className="bg-amber-300 py-2 px-3 rounded-md hover:text-white cursor-pointer "
+              onClick={() => {
+                router.push("/");
+              }}
+            >
+              Sair da sessão
+            </button>
           </div>
         </section>
       </main>
