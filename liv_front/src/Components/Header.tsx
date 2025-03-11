@@ -3,7 +3,7 @@
 import { Search, ShoppingCart, Album, User } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 
 interface HeaderProps {
   children: ReactNode;
@@ -12,9 +12,18 @@ interface HeaderProps {
 export default function Header({ children }: HeaderProps) {
   const router = useRouter();
 
+  const [barra, setBarra] = useState(false);
+
   return (
-    <div className="h-screen w-screen bg-white overflow-hidden">
-      <header className="h-1/11 bg-purple-800 flex flex-row justify-between items-center px-12 border-b-1 border-black">
+    <div
+      className="h-screen w-screen bg-white overflow-hidden"
+      onClick={() => {
+        if (barra !== false) {
+          setBarra(false);
+        }
+      }}
+    >
+      <header className="h-1/11 bg-gray-900 flex flex-row justify-between items-center px-12 border-b-1 border-black">
         <button
           type="button"
           className="cursor-pointer"
@@ -41,7 +50,16 @@ export default function Header({ children }: HeaderProps) {
             <p>Carrinho</p>
           </div>
         </button>
-        <div className="w-2/7 h-4/7 bg-white rounded-xl text-black flex flex-row items-center px-2">
+        <div
+          className={`w-2/7 h-4/7 bg-white  text-black flex flex-row items-center px-2 ${
+            barra === true ? " rounded-t-xl" : "rounded-xl"
+          }`}
+          onClick={() => {
+            if (barra === false) {
+              setBarra(true);
+            }
+          }}
+        >
           <input
             type="text"
             placeholder="Buscar nome do livro ou autor"
@@ -51,6 +69,19 @@ export default function Header({ children }: HeaderProps) {
           <button type="button">
             <Search className="text-gray-800 ml-auto hover:text-amber-400 cursor-pointer"></Search>
           </button>
+          {barra === true && (
+            <div className="flex flex-col items-start px-3 py-1 space-y-2 overflow-y-auto overflow-x-hidden absolute h-1/5 w-102 right-133.5 top-13 bg-white rounded-b-md shadow-xl">
+              <p>
+                Harry jk
+                rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+              </p>
+              <p>Harry Potter</p>
+              <p>Harry Potter</p>
+              <p>Harry Potter</p>
+              <p>Harry Potter</p>
+              <p>Harry Potter</p>
+            </div>
+          )}
         </div>
 
         <button

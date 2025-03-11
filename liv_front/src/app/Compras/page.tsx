@@ -16,7 +16,7 @@ export default function Compras() {
   const [filtro, setFiltro] = useState("");
   return (
     <Header>
-      <main className="w-full h-9/10 flex flex-row">
+      <main className="w-full h-10/11 flex flex-row">
         <nav className="w-1/6 h-full flex flex-col bg-gray-900 py-5">
           <p className="h-1/10 w-full text-amber-600 font-bold text-2xl text-center">
             Filtrar histórico

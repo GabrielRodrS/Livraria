@@ -10,7 +10,7 @@ export default function Carrinho() {
 
   return (
     <Header>
-      <main className="h-9/10 w-full flex items-center justify-center">
+      <main className="h-10/11 w-full flex items-center justify-center">
         <div className="w-3/10 h-9/10 flex flex-col items-center rounded-sm border-2 ">
           <div className=" h-1/7 w-full flex flex-row space-x-3 items-center justify-center text-2xl font-bold bg-gray-900 rounded-t-sm  text-amber-400">
             <ShoppingCart width={35} height={35}></ShoppingCart>
@@ -35,6 +35,7 @@ export default function Carrinho() {
             <button
               type="button"
               className="bg-green-500 py-2 px-3 rounded-md cursor-pointer hover:text-amber-400"
+              onClick={() => router.push("/Comprar")}
             >
               Fazer pedido
             </button>

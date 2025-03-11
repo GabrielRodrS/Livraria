@@ -1,12 +1,23 @@
 import Image from "next/image";
 import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Pedido() {
   const [quant, setQuant] = useState(1);
+  const router = useRouter();
   return (
     <div className="h-45 w-full bg-white flex flex-row border-y-2 border-black py-2 justify-around">
-      <Image src="/livro10.jpg" alt="Livro" width={170} height={170}></Image>
+      <Image
+        src="/livro10.jpg"
+        alt="Livro"
+        width={170}
+        height={170}
+        onClick={() => {
+          router.push("/Informacoes");
+        }}
+        className="cursor-pointer"
+      ></Image>
       <aside className="flex flex-col items-center text-black justify-center font-semibold break-words max-w-[163px] space-y-3">
         <p className="w-full truncate">Baby shark</p>
         <p className="w-full truncate">R$ 46,50</p>

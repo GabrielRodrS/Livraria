@@ -21,7 +21,7 @@ export default function BlocoPerfil({
 }: BlocoPerfilProps) {
   const router = useRouter();
   return (
-    <main className="flex h-9/10 w-full items-center justify-center">
+    <main className="flex h-10/11 w-full items-center justify-center">
       <section className=" w-2/6 h-5/6">
         <div className="h-1/5 w-full bg-gray-300 flex flex-col items-center justify-center rounded-t-md">
           <User height={40} width={40} className="text-black"></User>
