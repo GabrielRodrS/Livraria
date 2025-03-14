@@ -1,5 +1,9 @@
 import { Repository } from 'typeorm';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Usuario } from './usuarios.entity';
 
@@ -40,5 +44,15 @@ export class usuariosService {
     if (resultado.affected === 0) {
       throw new NotFoundException('Erro ao deletar usuário!');
     }
+  }
+
+  async LogarUsuarios(email: string, senha: string): Promise<Usuario | null> {
+    const usuario = await this.usuariosRepository.findOne({ where: { email } });
+
+    if (usuario && senha === usuario.senha) {
+      return usuario;
+    }
+
+    throw new UnauthorizedException('Credenciais inválidas!');
   }
 }

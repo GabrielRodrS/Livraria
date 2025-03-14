@@ -3,6 +3,8 @@ import { useState } from "react";
 import Formulario from "../Components/Formulario";
 import { useRouter } from "next/navigation";
 import { BookOpen } from "lucide-react";
+import axios from "axios";
+import { AxiosError } from "axios";
 
 export default function Login() {
   const [msg, setMsg] = useState("");
@@ -22,7 +24,21 @@ export default function Login() {
       return;
     }
 
-    router.push("./InterfaceP");
+    const dados = { email: email, senha: senha };
+
+    try {
+      console.log(dados);
+      await axios.post("http://localhost:3000/usuarios/login", dados);
+
+      router.push("/InterfaceP");
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        setMsg(
+          error.response?.data?.message ||
+            "Erro ao realizar login. Tente novamente!"
+        );
+      }
+    }
   };
   return (
     <Formulario titulo={titulo}>

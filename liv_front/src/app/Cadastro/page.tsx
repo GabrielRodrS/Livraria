@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Formulario from "../../Components/Formulario";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { AxiosError } from "axios";
 
 export default function Cadastro() {
   const [msg, setMsg] = useState("");
@@ -43,7 +45,23 @@ export default function Cadastro() {
       return;
     }
 
-    router.push("/InterfaceP");
+    const dados = { nome, telefone: tel, email, senha };
+
+    try {
+      console.log(dados);
+      await axios.post("http://localhost:3000/usuarios", dados, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      router.push("/InterfaceP");
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        setMsg(
+          error.response?.data?.message || "Erro ao cadastrar. Tente novamente!"
+        );
+      }
+    }
   };
 
   return (
