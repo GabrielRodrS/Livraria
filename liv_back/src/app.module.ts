@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { usuariosModule } from './Usuarios/usuarios.module';
+import { livrosModule } from './Livros/livros.module';
 
 @Module({
   imports: [
@@ -19,11 +20,12 @@ import { usuariosModule } from './Usuarios/usuarios.module';
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
         autoLoadEntities: true,
-        synchronize: true, // Lembre-se de desativar em produção
+        synchronize: true,
       }),
     }),
 
     usuariosModule,
+    livrosModule,
   ],
 })
 export class AppModule {}

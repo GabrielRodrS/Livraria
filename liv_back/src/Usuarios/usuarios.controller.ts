@@ -1,19 +1,17 @@
 import {
   Controller,
-  Get,
   Body,
   Post,
   Delete,
   Param,
-  Query,
   HttpCode,
 } from '@nestjs/common';
-import { usuariosService } from './usuarios.service';
+import { UsuariosService } from './usuarios.service';
 import { Usuario } from './usuarios.entity';
 
 @Controller('usuarios')
 export class UsuariosController {
-  constructor(private readonly usuariosService: usuariosService) {}
+  constructor(private readonly usuariosService: UsuariosService) {}
 
   @Post()
   async criarUsuarios(

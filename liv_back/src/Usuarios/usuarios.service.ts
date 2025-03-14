@@ -8,7 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Usuario } from './usuarios.entity';
 
 @Injectable()
-export class usuariosService {
+export class UsuariosService {
   constructor(
     @InjectRepository(Usuario)
     private readonly usuariosRepository: Repository<Usuario>,
@@ -30,7 +30,7 @@ export class usuariosService {
     return this.usuariosRepository.save(usuario);
   }
 
-  async deletarUsuarios(email: string) {
+  async deletarUsuarios(email: string): Promise<void> {
     const usuario = await this.usuariosRepository.findOne({
       where: { email },
     });
