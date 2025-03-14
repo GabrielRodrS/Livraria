@@ -51,9 +51,7 @@ export default function Header({ children }: HeaderProps) {
           </div>
         </button>
         <div
-          className={`w-2/7 h-4/7 bg-white  text-black flex flex-row items-center px-2 ${
-            barra === true ? " rounded-t-xl" : "rounded-xl"
-          }`}
+          className="w-2/7 h-4/7 bg-white  text-black flex flex-row items-center px-2 rounded-xl"
           onClick={() => {
             if (barra === false) {
               setBarra(true);
@@ -70,16 +68,23 @@ export default function Header({ children }: HeaderProps) {
             <Search className="text-gray-800 ml-auto hover:text-amber-400 cursor-pointer"></Search>
           </button>
           {barra === true && (
-            <div className="flex flex-col items-start px-3 py-1 space-y-2 overflow-y-auto overflow-x-hidden absolute h-1/5 w-102 right-133.5 top-13 bg-white rounded-b-md shadow-xl">
-              <p>
+            <div className="flex flex-col items-start px-2 space-y-2 py-2 absolute h-max w-[408px] right-133.5 top-14 bg-white rounded-b-md shadow-xl rounded-xl ">
+              <p className="truncate w-full whitespace-nowrap cursor-pointer hover:bg-gray-200 rounded-sm px-1 py-1">
                 Harry jk
                 rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
               </p>
-              <p>Harry Potter</p>
-              <p>Harry Potter</p>
-              <p>Harry Potter</p>
-              <p>Harry Potter</p>
-              <p>Harry Potter</p>
+              <p className="truncate w-full whitespace-nowrap cursor-pointer hover:bg-gray-200 rounded-sm px-1 py-1">
+                Harry Potter
+              </p>
+              <p className="truncate w-full whitespace-nowrap cursor-pointer hover:bg-gray-200 rounded-sm px-1 py-1">
+                Harry Potter
+              </p>
+              <p className="truncate w-full whitespace-nowrap cursor-pointer hover:bg-gray-200 rounded-sm px-1 py-1">
+                Harry Potter
+              </p>
+              <p className="truncate w-full whitespace-nowrap cursor-pointer hover:bg-gray-200 rounded-sm px-1 py-1">
+                Harry Potter
+              </p>
             </div>
           )}
         </div>

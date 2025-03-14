@@ -8,20 +8,39 @@ import {
   Ticket,
   CheckCheck,
   ShoppingBag,
+  Search,
 } from "lucide-react";
 import PedidoHistorico from "../../Components/PedidoHistorico";
 import { useState } from "react";
 
 export default function Compras() {
   const [filtro, setFiltro] = useState("");
+
   return (
     <Header>
       <main className="w-full h-10/11 flex flex-row">
         <nav className="w-1/6 h-full flex flex-col bg-gray-900 py-5">
-          <p className="h-1/10 w-full text-amber-600 font-bold text-2xl text-center">
-            Filtrar histórico
-          </p>
-          <div className="flex flex-col border-y-2 border-white-600 w-full h-3/10 pl-5 pt-3  text-white">
+          <div className="flex flex-col w-full h-2/10 space-y-5 items-center">
+            <p className=" w-full text-amber-600 font-bold text-2xl text-center">
+              Filtrar histórico
+            </p>
+            <div
+              className={
+                "w-7/8 bg-white  text-black flex flex-row items-center py-2 rounded-xl"
+              }
+            >
+              <input
+                type="text"
+                placeholder="Buscar"
+                className="flex-grow mx-1 pl-1 outline-none"
+                maxLength={50}
+              ></input>
+              <button type="button" className="absolute left-44">
+                <Search className="text-gray-800 hover:text-amber-400 cursor-pointer"></Search>
+              </button>
+            </div>
+          </div>
+          <div className="flex flex-col border-y-2 border-white-600 w-full h-3/10 pl-3 pt-3  text-white">
             <button
               className={`flex flex-row items-center space-x-4 cursor-pointer hover:text-amber-400 ${
                 filtro === "data" ? "text-amber-400" : "text-white"
@@ -53,12 +72,11 @@ export default function Compras() {
               <p className="  py-3">Quantidade comprada</p>
             </button>
           </div>
-          <div className="flex flex-col border-y-2 border-white-600 w-full h-3/10 pl-5 pt-3  text-white">
+          <div className="flex flex-col border-y-2 border-white-600 w-full h-3/10 pl-3 pt-3  text-white">
             <div
               className={`flex flex-row items-center space-x-4 cursor-pointer hover:text-amber-400 ${
                 filtro === "solicitado" ? "text-amber-400" : "text-white"
               }`}
-              value={filtro}
               onClick={() => setFiltro("solicitado")}
             >
               <Ticket></Ticket>
@@ -68,7 +86,6 @@ export default function Compras() {
               className={`flex flex-row items-center space-x-4 cursor-pointer hover:text-amber-400 ${
                 filtro === "transporte" ? "text-amber-400" : "text-white"
               }`}
-              value={filtro}
               onClick={() => setFiltro("transporte")}
             >
               <Truck></Truck>
@@ -78,7 +95,6 @@ export default function Compras() {
               className={`flex flex-row items-center space-x-4 cursor-pointer hover:text-amber-400 ${
                 filtro === "entregue" ? "text-amber-400" : "text-white"
               }`}
-              value={filtro}
               onClick={() => setFiltro("entregue")}
             >
               <CheckCheck></CheckCheck>

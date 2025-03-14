@@ -19,8 +19,8 @@ export default function InformacoesLivro({
   const router = useRouter();
   return (
     <div className="h-10/11 w-full flex items-center justify-center">
-      <main className="h-4/6 w-3/6 grid grid-cols-2 grid-rows-5  shadow-2xl rounded-sm">
-        <section className="row-span-5 bg-gray-600 flex items-center justify-center">
+      <main className="h-4/6 w-3/6 grid grid-cols-2 grid-rows-5  shadow-2xl rounded-sm border-gray-800 border-3">
+        <section className="row-span-5 bg-radial from-gray-100 to-gray-800 flex items-center justify-center">
           <Image
             src={"/livro10.jpg"}
             height={200}
@@ -30,7 +30,7 @@ export default function InformacoesLivro({
         </section>
 
         <aside className="row-span-4 bg-gray-300 justify-start   text-black font-bold p-5">
-          <div className="flex flex-col border-b-3 border-black space-y-2 pb-3">
+          <div className="flex flex-col border-b-2 border-black space-y-2 pb-3">
             <p className="text-xl  truncate border-b-3">Baby Shark</p>
             <p className="text-amber-700">R$ 29,99</p>
             <p>Quantidade de páginas: 3000</p>

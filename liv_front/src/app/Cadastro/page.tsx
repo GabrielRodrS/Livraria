@@ -49,7 +49,10 @@ export default function Cadastro() {
   return (
     <Formulario titulo={titulo}>
       <form onSubmit={realizarCadastro}>
-        <section className="flex flex-col items-center justify-center my-10 w-full space-y-10">
+        <section className="flex flex-col items-center justify-center my-8 w-full space-y-8">
+          <p className="font-bold text-lg text-gray-900">
+            Crie uma conta para aproveitar nossas ofertas!
+          </p>
           <div className=" space-x-2 ">
             <label className="text-black font-bold ">Nome:</label>
             <input
