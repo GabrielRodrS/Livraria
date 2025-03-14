@@ -52,4 +52,13 @@ export class LivrosService {
       throw new NotFoundException('Problema ao deletar livro!');
     }
   }
+
+  async buscarLivros(): Promise<Livro[]> {
+    const livros = await this.livrosRepository.find();
+
+    if (livros === null) {
+      throw new NotFoundException('Nenhum livro encontrado!');
+    }
+    return livros;
+  }
 }

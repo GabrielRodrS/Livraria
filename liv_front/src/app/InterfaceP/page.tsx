@@ -1,18 +1,42 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FileSpreadsheet } from "lucide-react";
-import Image from "next/image";
 import Header from "../../Components/Header";
 import Livro from "../../Components/Livro";
+import axios from "axios";
+
+export interface Livro {
+  codigo: number;
+  titulo: string;
+  disponiveis: number;
+  autor: string;
+  genero: string[];
+  preco: number;
+  paginas: number;
+  publicacao: string;
+  vendas: number;
+  source: string;
+}
 
 export default function InterfaceP() {
   const [quantPag, setQuantPag] = useState(0);
   const [generoLivro, setGeneroLivro] = useState("");
   const [precoLivro, setPrecoLivro] = useState("");
+  const [livros, setLivros] = useState<Livro[]>([]);
 
-  const router = useRouter();
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/livros/buscar")
+      .then((response) => {
+        setLivros(response.data);
+      })
+      .catch((error) => {
+        console.error(
+          error.response?.data?.message || "Erro ao buscar livros!"
+        );
+      });
+  }, []);
 
   return (
     <Header>
@@ -135,212 +159,14 @@ export default function InterfaceP() {
               </button>
             ))}
           </nav>
-          <div className="text-gray-900 w-full h-full overflow-y-auto grid grid-cols-5 gap-5 text-center justify-center px-6 pt-6">
-            <button
-              className="cursor-pointer"
-              onClick={() => {
-                router.push("/Informacoes");
-              }}
-            >
-              <div className="h-100">
-                <div className="flex flex-col items-center space-y-5">
-                  <Image
-                    src="/livro1.jpg"
-                    alt="Livro"
-                    width={170}
-                    height={170}
-                  ></Image>
-                  <div className="flex flex-col justify-evenly font-semibold space-y-1">
-                    <p>Livro Mofado</p>
-                    <p>R$ 20,00</p>
-                    <p>100 páginas</p>
-                  </div>
-                </div>
-              </div>
-            </button>
-            <button className="cursor-pointer">
-              <div className="h-100">
-                <div className="flex flex-col items-center space-y-5">
-                  <Image
-                    src="/livro2.jpg"
-                    alt="Livro"
-                    width={170}
-                    height={170}
-                  ></Image>
-                  <div className="flex flex-col justify-evenly font-semibold space-y-1">
-                    <p>Livro Rústico</p>
-                    <p>R$ 30,00</p>
-                    <p>60 páginas</p>
-                  </div>
-                </div>
-              </div>
-            </button>
-            <div className="h-100">
-              <div className="flex flex-col items-center space-y-5">
-                <Image
-                  src="/livro3.jpg"
-                  alt="Livro"
-                  width={170}
-                  height={170}
-                ></Image>
-                <div className="flex flex-col justify-evenly font-semibold space-y-1">
-                  <p>Xadrezki</p>
-                  <p>R$ 43,99</p>
-                  <p>137 páginas</p>
-                </div>
-              </div>
-            </div>
-            <div className="h-100">
-              <div className="flex flex-col items-center space-y-5">
-                <Image
-                  src="/livro4.jpg"
-                  alt="Livro"
-                  width={170}
-                  height={170}
-                ></Image>
-                <div className="flex flex-col justify-evenly font-semibold">
-                  <p>Bruxaria e suas invocações</p>
-                  <p>R$ 252,00</p>
-                  <p>309 páginas</p>
-                </div>
-              </div>
-            </div>
-            <div className="h-100">
-              <div className="flex flex-col items-center space-y-5">
-                <Image
-                  src="/livro5.jpg"
-                  alt="Livro"
-                  width={170}
-                  height={170}
-                ></Image>
-                <div className="flex flex-col justify-evenly font-semibold">
-                  <p>Mó paz nessa floresta</p>
-                  <p>R$ 46,50</p>
-                  <p>144 páginas</p>
-                </div>
-              </div>
-            </div>
-            <div className="h-100">
-              <div className="flex flex-col items-center space-y-5">
-                <Image
-                  src="/livro6.jpg"
-                  alt="Livro"
-                  width={170}
-                  height={170}
-                ></Image>
-                <div className="flex flex-col justify-evenly font-semibold">
-                  <p>A misteriosa floresta</p>
-                  <p>R$ 46,50</p>
-                  <p>144 páginas</p>
-                </div>
-              </div>
-            </div>
-            <Livro></Livro>
-            <div className="h-100">
-              <div className="flex flex-col items-center space-y-5">
-                <Image
-                  src="/livro7.jpg"
-                  alt="Livro"
-                  width={170}
-                  height={170}
-                ></Image>
-                <div className="flex flex-col justify-evenly font-semibold">
-                  <p>A misteriosa floresta</p>
-                  <p>R$ 46,50</p>
-                  <p>144 páginas</p>
-                </div>
-              </div>
-            </div>
-            <div className="h-100">
-              <div className="flex flex-col items-center space-y-5">
-                <Image
-                  src="/livro8.jpg"
-                  alt="Livro"
-                  width={170}
-                  height={170}
-                ></Image>
-                <div className="flex flex-col justify-evenly font-semibold">
-                  <p>A misteriosa floresta</p>
-                  <p>R$ 46,50</p>
-                  <p>144 páginas</p>
-                </div>
-              </div>
-            </div>
-            <div className="h-100">
-              <div className="flex flex-col items-center space-y-5">
-                <Image
-                  src="/livro9.jpg"
-                  alt="Livro"
-                  width={170}
-                  height={170}
-                ></Image>
-                <div className="flex flex-col justify-evenly font-semibold">
-                  <p>A misteriosa floresta</p>
-                  <p>R$ 46,50</p>
-                  <p>144 páginas</p>
-                </div>
-              </div>
-            </div>
-            <div className="h-100">
-              <div className="flex flex-col items-center space-y-5">
-                <Image
-                  src="/livro10.jpg"
-                  alt="Livro"
-                  width={170}
-                  height={170}
-                ></Image>
-                <div className="flex flex-col justify-evenly font-semibold">
-                  <p>Baby Shark</p>
-                  <p>R$ 46,50</p>
-                  <p>144 páginas</p>
-                </div>
-              </div>
-            </div>
-            <div className="h-100">
-              <div className="flex flex-col items-center space-y-5">
-                <Image
-                  src="/livro11.jpg"
-                  alt="Livro"
-                  width={170}
-                  height={170}
-                ></Image>
-                <div className="flex flex-col justify-evenly font-semibold">
-                  <p>A misteriosa floresta</p>
-                  <p>R$ 46,50</p>
-                  <p>144 páginas</p>
-                </div>
-              </div>
-            </div>
-            <div className="h-100">
-              <div className="flex flex-col items-center space-y-5">
-                <Image
-                  src="/livro12.jpg"
-                  alt="Livro"
-                  width={170}
-                  height={170}
-                ></Image>
-                <div className="flex flex-col justify-evenly font-semibold">
-                  <p>A misteriosa floresta</p>
-                  <p>R$ 46,50</p>
-                  <p>144 páginas</p>
-                </div>
-              </div>
-            </div>
-            <div className="h-100">
-              <div className="flex flex-col items-center space-y-5">
-                <Image
-                  src="/livro6.jpg"
-                  alt="Livro"
-                  width={170}
-                  height={170}
-                ></Image>
-                <div className="flex flex-col justify-evenly font-semibold">
-                  <p>A misteriosa floresta</p>
-                  <p>R$ 46,50</p>
-                  <p>144 páginas</p>
-                </div>
-              </div>
-            </div>
+          <div className="text-gray-900 w-full h-full overflow-y-auto grid grid-cols-5 gap-5 items-start justify-center px-6 pt-6">
+            {livros.length > 0
+              ? livros.map((livro) =>
+                  livro.codigo ? (
+                    <Livro key={livro.codigo} livro={livro} />
+                  ) : null
+                )
+              : null}
           </div>
         </main>
       </div>

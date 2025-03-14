@@ -1,4 +1,4 @@
-import { Body, Post, Delete, Controller, HttpCode } from '@nestjs/common';
+import { Body, Post, Delete, Get, Controller, HttpCode } from '@nestjs/common';
 import { LivrosService } from './livros.service';
 import { Livro } from './livros.entity';
 
@@ -37,5 +37,10 @@ export class LivrosController {
   @HttpCode(204)
   async deletarLivros(@Body('codigo') codigo: number): Promise<void> {
     await this.livrosService.deletarLivros(codigo);
+  }
+
+  @Get('buscar')
+  async buscarLivros(): Promise<Livro[]> {
+    return await this.livrosService.buscarLivros();
   }
 }
