@@ -22,8 +22,9 @@ export interface Livro {
 export default function InterfaceP() {
   const [quantPag, setQuantPag] = useState(0);
   const [generoLivro, setGeneroLivro] = useState("");
-  const [precoLivro, setPrecoLivro] = useState("");
+  const [precoLivro, setPrecoLivro] = useState(0);
   const [livros, setLivros] = useState<Livro[]>([]);
+  const [header, setHeader] = useState("");
 
   useEffect(() => {
     axios
@@ -33,10 +34,59 @@ export default function InterfaceP() {
       })
       .catch((error) => {
         console.error(
-          error.response?.data?.message || "Erro ao buscar livros!"
+          error.response?.data?.message || "Erro ao buscar todos os livros!"
         );
       });
   }, []);
+
+  function zerarFiltros() {
+    setGeneroLivro("");
+    setPrecoLivro(0);
+    setQuantPag(0);
+  }
+
+  useEffect(() => {
+    const filtroUrl = `http://localhost:3000/livros/buscarFiltro?genero=${generoLivro}&preco=${precoLivro}&paginas=${quantPag}`;
+
+    axios
+      .get(filtroUrl)
+      .then((response) => {
+        setLivros(response.data);
+      })
+      .catch((error) => {
+        console.error(
+          error.response?.data?.message || "Nenhum livro encontrado!"
+        );
+      });
+  }, [generoLivro, precoLivro, quantPag]);
+
+  useEffect(() => {
+    if (header) {
+      const headerURL = `http://localhost:3000/livros/buscarHeader/${header}`;
+
+      axios
+        .get(headerURL)
+        .then((response) => {
+          setLivros(response.data);
+        })
+        .catch((error) => {
+          console.error(
+            error.response?.data?.message || "Nenhum livro encontrado!"
+          );
+        });
+    } else {
+      axios
+        .get("http://localhost:3000/livros/buscar")
+        .then((response) => {
+          setLivros(response.data);
+        })
+        .catch((error) => {
+          console.error(
+            error.response?.data?.message || "Erro ao buscar todos os livros!"
+          );
+        });
+    }
+  }, [header]);
 
   return (
     <Header>
@@ -49,11 +99,11 @@ export default function InterfaceP() {
             <div className="grid grid-cols-2 grid-rows-10 w-full h-full overflow-y-auto px-2  gap-2 rounded-md text-black  font-semibold mt-3">
               {[
                 "Fantasia",
-                "Ficção científica",
+                "Ficção Científica",
                 "Romance",
                 "Terror",
                 "Suspense",
-                "Aventura e ação",
+                "Aventura e Ação",
                 "Biografia",
                 "Ciência e Tecnologia",
                 "História",
@@ -65,11 +115,9 @@ export default function InterfaceP() {
               ].map((genero, index) => (
                 <button
                   type="button"
-                  onClick={() =>
-                    generoLivro !== genero
-                      ? setGeneroLivro(genero)
-                      : setGeneroLivro("")
-                  }
+                  onClick={() => {
+                    setGeneroLivro(generoLivro !== genero ? genero : "");
+                  }}
                   key={index}
                   className={` text-center cursor-pointer hover:text-amber-600 rounded-md ${
                     genero.length > 10 ? "row-span-2" : ""
@@ -96,23 +144,27 @@ export default function InterfaceP() {
                 "R$ 50,00",
                 "R$ 100,00",
                 "R$ 500,00",
-              ].map((preco, index) => (
-                <div
-                  key={index}
-                  className={`text-center cursor-pointer hover:text-amber-600 rounded-md ${
-                    precoLivro === preco
-                      ? "text-amber-600 border-3"
-                      : "text-black"
-                  }`}
-                  onClick={() =>
-                    precoLivro !== preco
-                      ? setPrecoLivro(preco)
-                      : setPrecoLivro("")
-                  }
-                >
-                  {preco}
-                </div>
-              ))}
+              ].map((precoStr, index) => {
+                const preco = parseFloat(
+                  precoStr.replace("R$ ", "").replace(",", ".")
+                );
+
+                return (
+                  <div
+                    key={index}
+                    className={`text-center cursor-pointer hover:text-amber-600 rounded-md ${
+                      precoLivro === preco
+                        ? "text-amber-600 border-3"
+                        : "text-black"
+                    }`}
+                    onClick={() => {
+                      setPrecoLivro(precoLivro !== preco ? preco : 0);
+                    }}
+                  >
+                    {precoStr}
+                  </div>
+                );
+              })}
             </div>
           </div>
           <div className="flex flex-col space-y-1 items-center justify-start h-2/12">
@@ -133,9 +185,12 @@ export default function InterfaceP() {
                 <p>{quantPag}</p>
                 <button
                   type="button"
-                  className="py-1 px-2 rounded-md bg-green-300 cursor-pointer hover:text-white"
+                  className="py-1 px-2 rounded-md bg-red-400 cursor-pointer hover:text-white"
+                  onClick={() => {
+                    setQuantPag(0);
+                  }}
                 >
-                  Buscar
+                  Remover filtro
                 </button>
               </div>
             )}
@@ -143,7 +198,7 @@ export default function InterfaceP() {
         </nav>
 
         <main className="h-10/11 w-11/13">
-          <nav className="w-full h-1/11 bg-amber-400 flex flex-row items-center justify-evenly text-black font-semibold">
+          <nav className="w-full h-1/11 bg-amber-400 flex flex-row items-center text-black justify-evenly  font-semibold">
             {[
               "Mais vendidos",
               "Menores preços",
@@ -153,7 +208,11 @@ export default function InterfaceP() {
             ].map((item, index) => (
               <button
                 key={index}
-                className="cursor-pointer hover:text-white h-full w-full border-b-1 border-black"
+                className={`cursor-pointer hover:text-white h-full w-full border-b-1 border-black`}
+                onClick={() => {
+                  zerarFiltros();
+                  setHeader(header !== item ? item : "");
+                }}
               >
                 <p>{item}</p>
               </button>

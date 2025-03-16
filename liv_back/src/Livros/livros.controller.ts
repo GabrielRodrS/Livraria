@@ -1,4 +1,14 @@
-import { Body, Post, Delete, Get, Controller, HttpCode } from '@nestjs/common';
+import {
+  Param,
+  Body,
+  Post,
+  Delete,
+  Get,
+  Controller,
+  HttpCode,
+  Query,
+  ParseFloatPipe,
+} from '@nestjs/common';
 import { LivrosService } from './livros.service';
 import { Livro } from './livros.entity';
 
@@ -42,5 +52,19 @@ export class LivrosController {
   @Get('buscar')
   async buscarLivros(): Promise<Livro[]> {
     return await this.livrosService.buscarLivros();
+  }
+
+  @Get('buscarFiltro')
+  async buscarFiltro(
+    @Query('genero') genero: string,
+    @Query('preco', ParseFloatPipe) preco: number,
+    @Query('paginas', ParseFloatPipe) paginas: number,
+  ): Promise<Livro[]> {
+    return this.livrosService.buscarFiltro(genero, preco, paginas);
+  }
+
+  @Get('buscarHeader/:header')
+  async buscarHeader(@Param('header') header: string): Promise<Livro[]> {
+    return this.livrosService.buscarHeader(header);
   }
 }

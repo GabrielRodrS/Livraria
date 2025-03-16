@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Livro } from './livros.entity';
-import { Repository } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 
 @Injectable()
 export class LivrosService {
@@ -60,5 +60,52 @@ export class LivrosService {
       throw new NotFoundException('Nenhum livro encontrado!');
     }
     return livros;
+  }
+
+  async buscarFiltro(
+    genero: string,
+    preco: number,
+    paginas: number,
+  ): Promise<Livro[]> {
+    const filtrar = this.livrosRepository.createQueryBuilder('livro');
+
+    if (genero && genero.trim() !== '') {
+      filtrar.andWhere('livro.genero LIKE :genero', {
+        genero: `%${genero}%`,
+      });
+    }
+
+    if (typeof preco === 'number' && preco > 0) {
+      filtrar.andWhere('livro.preco <= :preco', { preco });
+    }
+
+    if (typeof paginas === 'number' && paginas > 0) {
+      filtrar.andWhere('livro.paginas <= :paginas', { paginas });
+    }
+
+    return filtrar.getMany();
+  }
+
+  async buscarHeader(header: string): Promise<Livro[]> {
+    const campoDeOrdenacao: string = this.getCampoDeOrdenacao(header);
+    return this.livrosRepository
+      .createQueryBuilder('livro')
+      .orderBy(campoDeOrdenacao, header === 'Menores preços' ? 'ASC' : 'DESC')
+      .getMany();
+  }
+
+  private getCampoDeOrdenacao(header: string): string {
+    switch (header) {
+      case 'Mais vendidos':
+        return 'livro.vendas';
+      case 'Menores preços':
+        return 'livro.preco';
+      case 'Maiores preços':
+        return 'livro.preco';
+      case 'Quantidade disponível':
+        return 'livro.disponiveis';
+      default:
+        return 'livro.publicacao';
+    }
   }
 }
