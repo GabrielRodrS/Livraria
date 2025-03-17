@@ -54,7 +54,7 @@ export default function Cadastro() {
           "Content-Type": "application/json",
         },
       });
-      router.push("/InterfaceP");
+      router.push("/");
     } catch (error) {
       if (error instanceof AxiosError) {
         setMsg(

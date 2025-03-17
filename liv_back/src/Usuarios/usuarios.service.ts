@@ -6,12 +6,15 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Usuario } from './usuarios.entity';
+import { User } from './user.interface';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UsuariosService {
   constructor(
     @InjectRepository(Usuario)
     private readonly usuariosRepository: Repository<Usuario>,
+    private readonly jwtService: JwtService,
   ) {}
 
   async criarUsuarios(
@@ -54,5 +57,18 @@ export class UsuariosService {
     }
 
     throw new UnauthorizedException('Credenciais inválidas!');
+  }
+
+  async altNome(email: string, nome: string): Promise<string> {
+    const usuario = await this.usuariosRepository.findOne({ where: { email } });
+
+    if (!usuario) {
+      throw new NotFoundException('Usuário não encontrado!');
+    }
+
+    usuario.nome = nome;
+    await this.usuariosRepository.save(usuario);
+
+    return usuario.nome;
   }
 }

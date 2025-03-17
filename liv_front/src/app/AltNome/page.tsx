@@ -2,11 +2,45 @@
 
 import Header from "../../Components/Header";
 import BlocoPerfil from "../../Components/BlocoPerfil";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import userData from "../Interfaces/User";
+import axios from "axios";
 
 export default function AltNome() {
   const [nome, setNome] = useState("");
+  const [user, setUser] = useState<userData | null>(null);
+
+  useEffect(() => {
+    const InfoUser = localStorage.getItem("user");
+    if (InfoUser) {
+      setUser(JSON.parse(InfoUser));
+    }
+  }, []);
+
+  const confirmar = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+
+    if (!user) return;
+
+    const dados = { email: user?.email, nome: nome };
+
+    try {
+      const response = await axios.patch(
+        "http://localhost:3000/usuarios/nome",
+        dados
+      );
+
+      const novoUser = { ...user, nome: response.data.nome || nome };
+
+      localStorage.setItem("user", JSON.stringify(novoUser));
+
+      router.push("/Perfil");
+    } catch (error) {
+      console.error("Erro ao alterar nome!", error);
+    }
+  };
+
   const lab = "Novo telefone:";
 
   const proximo = "Confirmar";
@@ -14,11 +48,6 @@ export default function AltNome() {
   const voltnav = "/Perfil";
 
   const router = useRouter();
-
-  const confirmar = (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    router.push("/Perfil");
-  };
 
   return (
     <Header>

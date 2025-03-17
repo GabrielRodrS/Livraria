@@ -27,8 +27,24 @@ export default function Login() {
     const dados = { email: email, senha: senha };
 
     try {
-      console.log(dados);
-      await axios.post("http://localhost:3000/usuarios/login", dados);
+      const response = await axios.post(
+        "http://localhost:3000/usuarios/login",
+        dados
+      );
+
+      const { token } = response.data;
+      localStorage.setItem("token", token);
+
+      const userResponse = await axios.get(
+        "http://localhost:3000/usuarios/auth",
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      console.log(userResponse);
+
+      const { nome, telefone, email } = userResponse.data;
+
+      localStorage.setItem("user", JSON.stringify({ nome, telefone, email }));
 
       router.push("/InterfaceP");
     } catch (error) {

@@ -2,12 +2,15 @@
 
 import Header from "../../Components/Header";
 import BlocoPerfil from "../../Components/BlocoPerfil";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import userData from "../Interfaces/User";
 
 export default function AltEmail() {
   const [senha, setSenha] = useState("");
   const [email, setEmail] = useState("");
+  const [user, setUser] = useState<userData | null>(null);
   const lab = "Novo email:";
 
   const proximo = "Confirmar";
@@ -16,8 +19,16 @@ export default function AltEmail() {
 
   const router = useRouter();
 
+  useEffect(() => {
+    const InfoUser = localStorage.getItem("user");
+    if (InfoUser) {
+      setUser(JSON.parse(InfoUser));
+    }
+  }, []);
+
   const confirmar = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
+
     router.push("/Perfil");
   };
 

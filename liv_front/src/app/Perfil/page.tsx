@@ -2,9 +2,19 @@
 import Header from "../../Components/Header";
 import { User } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import userData from "../Interfaces/User";
 
 export default function Perfil() {
+  const [user, setUser] = useState<userData | null>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const infoUser = localStorage.getItem("user");
+    if (infoUser) {
+      setUser(JSON.parse(infoUser));
+    }
+  }, []);
 
   return (
     <Header>
@@ -20,7 +30,7 @@ export default function Perfil() {
               </p>
               <div className="text-black flex flex-row space-x-2 items-center">
                 <label className="font-bold">Nome:</label>
-                <p>Gabriel Rodrigues Siqueira</p>
+                <p>{user?.nome}</p>
                 <button
                   type="button"
                   className="py-1 px-2 bg-amber-400 cursor-pointer rounded-md hover:text-white"
@@ -31,7 +41,7 @@ export default function Perfil() {
               </div>
               <div className="text-black flex flex-row space-x-2 items-center">
                 <label className="font-bold">Telefone:</label>
-                <p>(44) 99999-9999</p>
+                <p>{user?.telefone}</p>
                 <button
                   type="button"
                   className="py-1 px-2 bg-amber-400 cursor-pointer rounded-md hover:text-white"
@@ -42,7 +52,7 @@ export default function Perfil() {
               </div>
               <div className="text-black flex flex-row space-x-2 items-center">
                 <label className="font-bold">E-mail:</label>
-                <p>gsiqueira394@gmail.com</p>
+                <p>{user?.email}</p>
                 <button
                   type="button"
                   className="py-1 px-2 bg-amber-400 cursor-pointer rounded-md hover:text-white"
@@ -53,7 +63,7 @@ export default function Perfil() {
               </div>
               <div className="text-black flex flex-row space-x-2 items-center">
                 <label className="font-bold">Senha:</label>
-                <p>12345678</p>
+                <p>********</p>
                 <button
                   type="button"
                   className="py-1 px-2 bg-amber-400 cursor-pointer rounded-md hover:text-white"
