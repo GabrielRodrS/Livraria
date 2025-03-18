@@ -13,9 +13,7 @@ import {
 } from '@nestjs/common';
 import { UsuariosService } from './usuarios.service';
 import { Usuario } from './usuarios.entity';
-import { User } from './user.interface';
 import { JwtService } from '@nestjs/jwt';
-import { AuthGuard } from '@nestjs/passport';
 
 @Controller('usuarios')
 export class UsuariosController {
@@ -77,6 +75,45 @@ export class UsuariosController {
   async altNome(@Body('email') email: string, @Body('nome') nome: string) {
     const resultado = this.usuariosService.altNome(email, nome);
 
+    return resultado;
+  }
+
+  @Patch('telefone')
+  async altTelefone(
+    @Body('email') email: string,
+    @Body('telefone') telefone: string,
+  ): Promise<string> {
+    const resultado = await this.usuariosService.altTelefone(email, telefone);
+
+    return resultado;
+  }
+
+  @Patch('email')
+  async altEmail(
+    @Body('novoEmail') novoEmail: string,
+    @Body('email') email: string,
+    @Body('senha') senha: string,
+  ): Promise<string> {
+    const resultado = await this.usuariosService.altEmail(
+      novoEmail,
+      email,
+      senha,
+    );
+
+    return resultado;
+  }
+
+  @Patch('senha')
+  async altSenha(
+    @Body('email') email: string,
+    @Body('senhaNova') senhaNova: string,
+    @Body('senhaAtual') senhaAtual: string,
+  ) {
+    const resultado = await this.usuariosService.altSenha(
+      email,
+      senhaNova,
+      senhaAtual,
+    );
     return resultado;
   }
 }
