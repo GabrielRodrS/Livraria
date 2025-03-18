@@ -32,10 +32,13 @@ export class UsuariosController {
     return this.usuariosService.criarUsuarios(nome, telefone, email, senha);
   }
 
-  @Delete('deletar/:email')
+  @Delete('deletar')
   @HttpCode(204)
-  async deletarUsuarios(@Param('email') email: string): Promise<void> {
-    await this.usuariosService.deletarUsuarios(email);
+  async deletarUsuarios(
+    @Body('email') email: string,
+    @Body('senha') senha: string,
+  ): Promise<void> {
+    await this.usuariosService.deletarUsuarios(email, senha);
   }
 
   @Post('login')

@@ -33,13 +33,17 @@ export class UsuariosService {
     return this.usuariosRepository.save(usuario);
   }
 
-  async deletarUsuarios(email: string): Promise<void> {
+  async deletarUsuarios(email: string, senha: string): Promise<void> {
     const usuario = await this.usuariosRepository.findOne({
       where: { email },
     });
 
     if (!usuario) {
       throw new NotFoundException('Usuário não encontrado!');
+    }
+
+    if (usuario.senha !== senha) {
+      throw new UnauthorizedException('Senha de usuário incorreta!');
     }
 
     const resultado = await this.usuariosRepository.delete({ email });

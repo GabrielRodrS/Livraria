@@ -91,6 +91,7 @@ export default function Perfil() {
               type="button"
               className="bg-amber-300 py-2 px-3 rounded-md hover:text-white cursor-pointer "
               onClick={() => {
+                localStorage.removeItem("user");
                 router.push("/");
               }}
             >
