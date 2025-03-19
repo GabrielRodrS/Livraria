@@ -1,5 +1,6 @@
 import { IsEmail } from 'class-validator';
-import { Entity, Column, PrimaryColumn } from 'typeorm';
+import { Carrinho } from 'src/Carrinhos/carrinhos.entity';
+import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
 
 @Entity()
 export class Usuario {
@@ -15,4 +16,7 @@ export class Usuario {
 
   @Column()
   senha: string;
+
+  @OneToMany(() => Carrinho, (carrinho) => carrinho.usuario)
+  carrinhos: Carrinho[];
 }

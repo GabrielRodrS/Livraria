@@ -108,4 +108,14 @@ export class LivrosService {
         return 'livro.publicacao';
     }
   }
+
+  async selecionarLivro(codigo: number): Promise<Livro> {
+    const pegarLivro = this.livrosRepository.findOne({ where: { codigo } });
+
+    if (!pegarLivro) {
+      throw new NotFoundException('Livro não encontrado no banco!');
+    }
+
+    return pegarLivro;
+  }
 }

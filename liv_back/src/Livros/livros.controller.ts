@@ -67,4 +67,12 @@ export class LivrosController {
   async buscarHeader(@Param('header') header: string): Promise<Livro[]> {
     return this.livrosService.buscarHeader(header);
   }
+
+  @Get('selecionado/:codigo')
+  async selecionarLivro(@Param('codigo') codigo: number): Promise<Livro> {
+    if (isNaN(codigo) || codigo <= 0) {
+      throw new Error('Código inválido');
+    }
+    return await this.livrosService.selecionarLivro(codigo);
+  }
 }

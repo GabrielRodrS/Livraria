@@ -7,7 +7,6 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Usuario } from './usuarios.entity';
 import { JwtService } from '@nestjs/jwt';
-import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';
 
 @Injectable()
 export class UsuariosService {

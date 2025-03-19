@@ -17,4 +17,4 @@ import { UsuariosController } from './usuarios.controller';
   providers: [UsuariosService],
   exports: [TypeOrmModule],
 })
-export class usuariosModule {}
+export class UsuariosModule {}

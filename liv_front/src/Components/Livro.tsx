@@ -11,6 +11,7 @@ export default function Livro({ livro }: LivroProps) {
     <button
       className="cursor-pointer"
       onClick={() => {
+        localStorage.setItem("codigoLivro", JSON.stringify(livro.codigo));
         router.push("/Informacoes");
       }}
     >

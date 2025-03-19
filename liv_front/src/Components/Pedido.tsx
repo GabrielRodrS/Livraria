@@ -1,15 +1,18 @@
 import Image from "next/image";
-import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Item } from "../app/Carrinho/page";
 
-export default function Pedido() {
-  const [quant, setQuant] = useState(1);
+interface PedidoProps {
+  item: Item;
+}
+
+export default function Pedido({ item }: PedidoProps) {
   const router = useRouter();
   return (
     <div className="h-45 w-full bg-white flex flex-row border-y-2 border-black py-2 justify-around">
       <Image
-        src="/livro10.jpg"
+        src={item.source}
         alt="Livro"
         width={170}
         height={170}
@@ -19,24 +22,17 @@ export default function Pedido() {
         className="cursor-pointer"
       ></Image>
       <aside className="flex flex-col items-center text-black justify-center font-semibold break-words max-w-[163px] space-y-3">
-        <p className="w-full truncate">Baby shark</p>
-        <p className="w-full truncate">R$ 46,50</p>
+        <p className="w-full truncate">{item.nome}</p>
+        <p className="w-full truncate">{item.preco}</p>
         <div className="flex flex-row w-full">
-          <p>Quantidade: {quant}</p>
+          <p>Quantidade: {item.quantidade}</p>
           <button>
-            <Plus
-              className="p-1 ml-2 bg-amber-400 rounded-sm cursor-pointer hover:text-white"
-              onClick={() => setQuant(quant + 1)}
-            ></Plus>
+            <Plus className="p-1 ml-2 bg-amber-400 rounded-sm cursor-pointer hover:text-white"></Plus>
           </button>
           <button>
             <Minus
               className="p-1 bg-amber-300 rounded-sm cursor-pointer hover:text-white"
-              onClick={() => {
-                if (quant > 1) {
-                  setQuant(quant - 1);
-                }
-              }}
+              onClick={() => {}}
             ></Minus>
           </button>
         </div>

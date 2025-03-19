@@ -4,9 +4,49 @@ import { ShoppingCart } from "lucide-react";
 import Header from "../../Components/Header";
 import { useRouter } from "next/navigation";
 import Pedido from "../../Components/Pedido";
+import { useState, useEffect } from "react";
+import userData from "../Interfaces/User";
+import axios from "axios";
+
+export interface Item {
+  idCarrinho: number;
+  nome: string;
+  preco: number;
+  quantidade: number;
+  usuario: object;
+  source: string;
+}
 
 export default function Carrinho() {
+  const [user, setUser] = useState<userData | null>(null);
+  const [itens, setItens] = useState<Item[]>([]);
   const router = useRouter();
+
+  useEffect(() => {
+    const infoUser = localStorage.getItem("user");
+    if (infoUser) {
+      setUser(JSON.parse(infoUser));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!user?.email) {
+      return;
+    }
+
+    const buscarItens = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/carrinhos/buscar/${user.email}`
+        );
+        setItens(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar itens do carrinho!", error);
+      }
+    };
+
+    buscarItens();
+  }, [user]);
 
   return (
     <Header>
@@ -18,9 +58,13 @@ export default function Carrinho() {
           </div>
 
           <section className="h-5/7 w-full grid grid-cols-1 rounded-b-sm bg-white shadow-2xl overflow-y-auto">
-            <Pedido></Pedido>
-            <Pedido></Pedido>
-            <Pedido></Pedido>
+            {itens.length > 0
+              ? itens.map((item) =>
+                  item.idCarrinho ? (
+                    <Pedido key={item.idCarrinho} item={item}></Pedido>
+                  ) : null
+                )
+              : null}
           </section>
           <div className="h-1/7 w-full bg-gray-300 rounded-b-sm flex flex-row items-center justify-center space-x-20">
             <button

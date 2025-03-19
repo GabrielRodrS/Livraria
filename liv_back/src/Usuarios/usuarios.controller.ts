@@ -5,9 +5,7 @@ import {
   Get,
   Delete,
   Patch,
-  Param,
   HttpCode,
-  UseGuards,
   UnauthorizedException,
   Req,
 } from '@nestjs/common';
@@ -69,7 +67,7 @@ export class UsuariosController {
     try {
       const decoded = this.jwtService.verify(token);
       return decoded;
-    } catch (error) {
+    } catch {
       throw new UnauthorizedException('Token inválido!');
     }
   }

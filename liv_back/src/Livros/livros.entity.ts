@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
+import { Carrinho } from 'src/Carrinhos/carrinhos.entity';
 
 @Entity()
 export class Livro {
@@ -31,4 +32,7 @@ export class Livro {
 
   @Column()
   source: string;
+
+  @OneToMany(() => Carrinho, (carrinho) => carrinho.livro)
+  carrinhos: Carrinho[];
 }
