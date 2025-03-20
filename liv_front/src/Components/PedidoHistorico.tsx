@@ -1,13 +1,18 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import SelecPedido from "../app/Interfaces/SelecPedido";
 
-export default function PedidoHistorico() {
+interface PedidoHistoricoProps {
+  pedido: SelecPedido;
+}
+
+export default function PedidoHistorico({ pedido }: PedidoHistoricoProps) {
   const router = useRouter();
   return (
     <div className="flex flex-row justify-center border-b-3 border-gray-900">
       <div className="h-45 w-full bg-white flex flex-row py-2 justify-start space-x-4">
         <Image
-          src="/livro10.jpg"
+          src={pedido?.source || "livro1.jpg"}
           alt="Livro"
           width={170}
           height={170}
@@ -18,13 +23,21 @@ export default function PedidoHistorico() {
         ></Image>
 
         <aside className="flex flex-col items-center text-black justify-center font-semibold break-words max-w-[220px] space-y-2">
-          <p className="w-full truncate">Baby Shark</p>
-          <p className="w-full truncate">R$ 46,50</p>
-          <p className="w-full truncate">Quantidade: 20</p>
-          <p className="w-full truncate text-amber-600">
-            Código do pedido: 10562
+          <p className="w-full truncate">{pedido.titulo}</p>
+          <p className="w-full truncate">R$ {pedido.preco}</p>
+          <p className="w-full truncate">Quantidade: {pedido.quantidade}</p>
+          <p className="w-full truncate ">Código do pedido: {pedido.codigo}</p>
+          <p
+            className={`w-full truncate text-green-600 text-base ${
+              pedido.status === "Pedido recebido"
+                ? "text-yellow-600"
+                : pedido.status === "Em transporte"
+                ? "text-orange-600"
+                : "text-green-600"
+            }`}
+          >
+            {pedido.status}!
           </p>
-          <p className="w-full truncate text-green-600">Status: entregue!</p>
         </aside>
       </div>
       <aside className=" w-2/5 flex flex-col items-center justify-center space-y-5 ">

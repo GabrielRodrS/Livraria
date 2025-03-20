@@ -11,10 +11,41 @@ import {
   Search,
 } from "lucide-react";
 import PedidoHistorico from "../../Components/PedidoHistorico";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import userData from "../Interfaces/User";
+import SelecPedido from "../Interfaces/SelecPedido";
 
 export default function Compras() {
   const [filtro, setFiltro] = useState("");
+  const [pedidos, setPedidos] = useState<SelecPedido[]>([]);
+  const [user, setUser] = useState<userData | null>(null);
+
+  useEffect(() => {
+    const infoUser = localStorage.getItem("user");
+    if (infoUser) {
+      setUser(JSON.parse(infoUser));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!user?.email) {
+      return;
+    }
+
+    const buscarPedidos = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/pedidos/buscar/${user.email}`
+        );
+        setPedidos(response.data);
+      } catch (error) {
+        console.error("Não foi possível carregar os pedidos!", error);
+      }
+    };
+
+    buscarPedidos();
+  }, [user]);
 
   return (
     <Header>
@@ -108,10 +139,16 @@ export default function Compras() {
             <p className="font-bold text-2xl">Suas compras</p>
           </header>
           <section className="bg-gray-200 w-3/6 h-10/12 my-auto mx-auto overflow-y-scroll  shadow-2xl rounded-b-sm mb-10">
-            <PedidoHistorico></PedidoHistorico>
-            <PedidoHistorico></PedidoHistorico>
-            <PedidoHistorico></PedidoHistorico>
-            <PedidoHistorico></PedidoHistorico>
+            {pedidos.length > 0
+              ? pedidos.map((pedido) =>
+                  pedido.idPedido ? (
+                    <PedidoHistorico
+                      key={pedido.idPedido}
+                      pedido={pedido}
+                    ></PedidoHistorico>
+                  ) : null
+                )
+              : null}
           </section>
         </div>
       </main>

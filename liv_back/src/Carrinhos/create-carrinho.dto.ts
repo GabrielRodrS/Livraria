@@ -1,4 +1,4 @@
-import { IsString, IsEmail, IsInt, Min } from 'class-validator';
+import { IsEmail, IsInt, Min } from 'class-validator';
 
 export class CreateCarrinhoDto {
   @IsInt()
