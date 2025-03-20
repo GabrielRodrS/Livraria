@@ -1,7 +1,9 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { Livro } from "../app/InterfaceP/page";
+import axios from "axios";
+import userData from "../app/Interfaces/User";
 
 interface InformacoesLivroProps {
   children: ReactNode;
@@ -20,6 +22,28 @@ export default function InformacoesLivro({
   livro,
 }: InformacoesLivroProps) {
   const router = useRouter();
+  const [user, setUser] = useState<userData | null>(null);
+
+  useEffect(() => {
+    const ls = localStorage.getItem("user");
+    if (ls) {
+      setUser(JSON.parse(ls));
+    }
+  }, []);
+
+  async function adicionarCarrinho() {
+    const dados = {
+      codigoLivro: livro.codigo,
+      emailUsuario: user?.email,
+      quantidade: 1,
+    };
+    try {
+      await axios.post("http://localhost:3000/carrinhos/novo", dados);
+      router.push(navr1);
+    } catch (error) {
+      console.error("Não foi possível adicionar o produto ao carrinho!", error);
+    }
+  }
 
   return (
     <div className="h-10/11 w-full flex items-center justify-center">
@@ -46,7 +70,9 @@ export default function InformacoesLivro({
         <div className="row-span-1 flex items-center justify-around bg-gray-300">
           <button
             className="cursor-pointer p-2 rounded-md text-black hover:text-white bg-amber-500"
-            onClick={() => router.push(navr1)}
+            onClick={() => {
+              adicionarCarrinho();
+            }}
           >
             {nav1}
           </button>

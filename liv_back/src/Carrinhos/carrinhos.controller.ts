@@ -1,4 +1,14 @@
-import { Controller, Post, Get, Body, Param } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Get,
+  Patch,
+  Body,
+  Delete,
+  Param,
+  HttpCode,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { CarrinhosService } from './carrinhos.service';
 import { CreateCarrinhoDto } from './create-carrinho.dto';
 import { Carrinho } from './carrinhos.entity';
@@ -19,5 +29,26 @@ export class CarrinhosController {
     @Param('usuarioEmail') usuarioEmail: string,
   ): Promise<Carrinho[]> {
     return await this.carrinhosService.buscarCarrinhos(usuarioEmail);
+  }
+
+  @Patch('quantidade')
+  async alterarQuantidade(
+    @Body('idCarrinho') idCarrinho: number,
+    @Body('valor') valor: number,
+  ): Promise<number> {
+    const alterar = await this.carrinhosService.alterarQuantidade(
+      idCarrinho,
+      valor,
+    );
+
+    return alterar;
+  }
+
+  @Delete('excluir/:idCarrinho')
+  @HttpCode(204)
+  async excluirItem(
+    @Param('idCarrinho', ParseIntPipe) idCarrinho: number,
+  ): Promise<void> {
+    await this.carrinhosService.excluirItem(idCarrinho);
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 import { Carrinho } from './carrinhos.entity';
 import { Livro } from 'src/Livros/livros.entity';
 import { Usuario } from 'src/Usuarios/usuarios.entity';
@@ -57,5 +57,37 @@ export class CarrinhosService {
     }
 
     return resultado;
+  }
+
+  async alterarQuantidade(idCarrinho: number, valor: number): Promise<number> {
+    const resultado = await this.carrinhosRepository.findOne({
+      where: { idCarrinho },
+    });
+
+    if (!resultado) {
+      throw new NotFoundException('Nenhum item encontrado!');
+    }
+
+    if (resultado.quantidade > 1 || valor == 1) {
+      resultado.quantidade = resultado.quantidade + valor;
+    }
+
+    this.carrinhosRepository.save(resultado);
+
+    return resultado.quantidade;
+  }
+
+  async excluirItem(idCarrinho: number): Promise<void> {
+    const carrinho = await this.carrinhosRepository.findOne({
+      where: { idCarrinho },
+    });
+
+    if (!carrinho) {
+      throw new NotFoundException('Nenhum Item foi encontrado!');
+    }
+
+    await this.carrinhosRepository.delete(carrinho);
+
+    return;
   }
 }

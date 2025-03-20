@@ -14,7 +14,7 @@ export class Carrinho {
   preco: number;
 
   @Column()
-  quantidade: string;
+  quantidade: number;
 
   @Column()
   source: string;

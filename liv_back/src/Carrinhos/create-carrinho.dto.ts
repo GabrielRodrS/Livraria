@@ -8,6 +8,7 @@ export class CreateCarrinhoDto {
   @IsEmail()
   emailUsuario: string; // O e-mail do usuário (referência ao usuário)
 
-  @IsString()
-  quantidade: string; // Quantidade no carrinho
+  @IsInt()
+  @Min(1)
+  quantidade: number; // Quantidade no carrinho
 }
