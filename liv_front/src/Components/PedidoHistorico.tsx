@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import SelecPedido from "../app/Interfaces/SelecPedido";
+import axios from "axios";
 
 interface PedidoHistoricoProps {
   pedido: SelecPedido;
@@ -8,6 +9,16 @@ interface PedidoHistoricoProps {
 
 export default function PedidoHistorico({ pedido }: PedidoHistoricoProps) {
   const router = useRouter();
+
+  const cancelar = async () => {
+    try {
+      axios.patch(`http://localhost:3000/pedidos/cancelar/${pedido.idPedido}`);
+      window.location.reload();
+    } catch (error) {
+      console.error("Erro ao pedir cancelamento!", error);
+    }
+  };
+
   return (
     <div className="flex flex-row justify-center border-b-3 border-gray-900">
       <div className="h-45 w-full bg-white flex flex-row py-2 justify-start space-x-4">
@@ -33,6 +44,8 @@ export default function PedidoHistorico({ pedido }: PedidoHistoricoProps) {
                 ? "text-yellow-600"
                 : pedido.status === "Em transporte"
                 ? "text-orange-600"
+                : pedido.status === "Pedido de cancelamento"
+                ? "text-red-500"
                 : "text-green-600"
             }`}
           >
@@ -44,13 +57,22 @@ export default function PedidoHistorico({ pedido }: PedidoHistoricoProps) {
         <button
           type="button"
           className="bg-gray-400 py-2 px-3 rounded-md cursor-pointer text-black hover:text-white mx-5"
-          onClick={() => router.push("/Pedido")}
+          onClick={() => {
+            localStorage.setItem("pedido", JSON.stringify(pedido));
+            router.push("/Pedidos");
+          }}
         >
           Informações do pedido
         </button>
         <button
+          disabled={pedido.status === "Pedido de cancelamento"}
           type="button"
-          className="bg-red-500 py-2 px-3 rounded-md cursor-pointer text-black hover:text-white mx-5"
+          className={`bg-red-500 py-2 px-3 rounded-md cursor-pointer text-black hover:text-white mx-5 ${
+            pedido.status === "Pedido de cancelamnto" ? "opacity-50" : null
+          }`}
+          onClick={() => {
+            cancelar();
+          }}
         >
           Cancelar pedido
         </button>

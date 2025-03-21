@@ -9,4 +9,5 @@ export default interface SelecPedido {
   quantidade: number;
   status: string;
   source: string;
+  genero: string[];
 }

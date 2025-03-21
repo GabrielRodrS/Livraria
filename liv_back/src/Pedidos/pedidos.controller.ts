@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Body, Param } from '@nestjs/common';
+import { Controller, Post, Get, Patch, Body, Param } from '@nestjs/common';
 import { PedidosService } from './pedidos.service';
 import { CreatePedidoDto } from './create-pedidos.dto';
 import { Pedido } from './pedidos.entity';
@@ -17,5 +17,11 @@ export class PedidosController {
     @Param('userEmail') userEmail: string,
   ): Promise<Pedido[]> {
     return await this.pedidosService.buscarPedidos(userEmail);
+  }
+
+  @Patch('cancelar/:idPedido')
+  async pedidoCancelamento(@Param('idPedido') idPedido: number): Promise<void> {
+    const pedido = await this.pedidosService.pedidoCancelamento(idPedido);
+    return pedido;
   }
 }

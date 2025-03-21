@@ -51,4 +51,12 @@ export class CarrinhosController {
   ): Promise<void> {
     await this.carrinhosService.excluirItem(idCarrinho);
   }
+
+  @Delete('excluir/:userEmail')
+  @HttpCode(204)
+  async deletarCarrinhos(
+    @Param('usuarioEmail') usuarioEmail: string,
+  ): Promise<void> {
+    await this.carrinhosService.deletarCarrinhos(usuarioEmail);
+  }
 }

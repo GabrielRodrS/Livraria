@@ -57,6 +57,7 @@ export default function Informacoes() {
           <p>Quantidade disponível: {livro?.disponiveis}</p>
           <p>Quantidade de vendas: {livro?.vendas}</p>
           <p>Data de publicação: {livro?.publicacao.slice(0, 10)}</p>
+          <p>{livro.genero.join(", ")}</p>
         </div>
       </InformacoesLivro>
     </Header>

@@ -90,4 +90,18 @@ export class CarrinhosService {
 
     return;
   }
+
+  async deletarCarrinhos(usuarioEmail: string): Promise<void> {
+    const carrinho = await this.carrinhosRepository.find({
+      where: { usuario: { email: usuarioEmail } },
+      relations: ['usuario'],
+    });
+
+    if (carrinho.length === 0) {
+      throw new NotFoundException('Nenhum item encontrado!');
+    }
+    await this.carrinhosRepository.remove(carrinho);
+
+    return null;
+  }
 }

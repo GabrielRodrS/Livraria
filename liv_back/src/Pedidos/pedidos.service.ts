@@ -49,6 +49,25 @@ export class PedidosService {
     pedido.titulo = livro.titulo;
     pedido.source = livro.source;
 
+    livro.vendas = livro.vendas + createPedidoDto.quantidade;
+
+    await this.livrosRepository.save(livro);
+
+    // Aqui fazemos o ajuste para garantir que genero seja um array de strings
+    // Se o genero já for um array, não há necessidade de fazer nada
+    if (Array.isArray(livro.genero)) {
+      pedido.genero = livro.genero;
+    } else {
+      // Caso o genero seja um objeto (como o que você mencionou), transformamos ele em um array de strings
+      try {
+        pedido.genero = Object.values(JSON.parse(livro.genero)); // Fazemos o parse se for uma string JSON
+      } catch (error) {
+        // Caso a conversão falhe, setamos um array vazio
+        pedido.genero = [];
+        console.log(error);
+      }
+    }
+
     return this.pedidosRepository.save(pedido);
   }
 
@@ -63,5 +82,21 @@ export class PedidosService {
     }
 
     return pedidos;
+  }
+
+  async pedidoCancelamento(idPedido: number): Promise<void> {
+    const pedido = await this.pedidosRepository.findOne({
+      where: { idPedido },
+    });
+
+    if (!pedido) {
+      throw new NotFoundException('Não foi possível encontrar o pedido!');
+    }
+
+    pedido.status = 'Pedido de cancelamento';
+
+    await this.pedidosRepository.save(pedido);
+
+    return null;
   }
 }

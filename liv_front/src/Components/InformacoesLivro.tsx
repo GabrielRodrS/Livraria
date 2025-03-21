@@ -4,6 +4,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { Livro } from "../app/InterfaceP/page";
 import axios from "axios";
 import userData from "../app/Interfaces/User";
+import SelecPedido from "../app/Interfaces/SelecPedido";
 
 interface InformacoesLivroProps {
   children: ReactNode;
@@ -11,7 +12,7 @@ interface InformacoesLivroProps {
   nav2: string;
   navr1: string;
   navr2: string;
-  livro: Livro;
+  livro: Livro | SelecPedido;
 }
 export default function InformacoesLivro({
   children,
@@ -63,7 +64,6 @@ export default function InformacoesLivro({
             <p className="text-amber-700">{livro?.preco}</p>
             <p>Quantidade de páginas: {livro?.paginas}</p>
             <p className="truncate">Autor: {livro?.autor}</p>
-            <p>{livro?.genero}</p>
           </div>
           {children}
         </aside>

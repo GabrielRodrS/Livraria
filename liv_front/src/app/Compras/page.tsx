@@ -9,6 +9,7 @@ import {
   CheckCheck,
   ShoppingBag,
   Search,
+  X,
 } from "lucide-react";
 import PedidoHistorico from "../../Components/PedidoHistorico";
 import { useEffect, useState } from "react";
@@ -17,9 +18,9 @@ import userData from "../Interfaces/User";
 import SelecPedido from "../Interfaces/SelecPedido";
 
 export default function Compras() {
-  const [filtro, setFiltro] = useState("");
   const [pedidos, setPedidos] = useState<SelecPedido[]>([]);
   const [user, setUser] = useState<userData | null>(null);
+  const [filtro, setFiltro] = useState("");
 
   useEffect(() => {
     const infoUser = localStorage.getItem("user");
@@ -46,6 +47,14 @@ export default function Compras() {
 
     buscarPedidos();
   }, [user]);
+
+  useEffect(() => {
+    try {
+      axios.get(`http://localhost:3000/buscar/filtro/${filtro}`);
+    } catch (error) {
+      console.error("Erro ao buscar pedidos por este filtro!", error);
+    }
+  }, [filtro]);
 
   return (
     <Header>
@@ -77,7 +86,7 @@ export default function Compras() {
                 filtro === "data" ? "text-amber-400" : "text-white"
               }`}
               value={filtro}
-              onClick={() => setFiltro("data")}
+              onClick={() => setFiltro("Data recente")}
             >
               <Calendar></Calendar>
               <p className="  py-3">Data recente</p>
@@ -87,7 +96,7 @@ export default function Compras() {
                 filtro === "preco" ? "text-amber-400" : "text-white"
               }`}
               value={filtro}
-              onClick={() => setFiltro("preco")}
+              onClick={() => setFiltro("preço de compra")}
             >
               <DollarSign></DollarSign>
               <p className="  py-3">Preço de compra</p>
@@ -97,27 +106,27 @@ export default function Compras() {
                 filtro === "quantidade" ? "text-amber-400" : "text-white"
               }`}
               value={filtro}
-              onClick={() => setFiltro("quantidade")}
+              onClick={() => setFiltro("Quantidade comprada")}
             >
               <Layers></Layers>
               <p className="  py-3">Quantidade comprada</p>
             </button>
           </div>
-          <div className="flex flex-col border-y-2 border-white-600 w-full h-3/10 pl-3 pt-3  text-white">
+          <div className="flex flex-col border-y-2 border-white-600 w-full h-4/10 pl-3 pt-3  text-white">
             <div
               className={`flex flex-row items-center space-x-4 cursor-pointer hover:text-amber-400 ${
                 filtro === "solicitado" ? "text-amber-400" : "text-white"
               }`}
-              onClick={() => setFiltro("solicitado")}
+              onClick={() => setFiltro("Pedido recebidos")}
             >
               <Ticket></Ticket>
-              <p className=" w-full py-3">Solicitado</p>
+              <p className=" w-full py-3">Pedidos recebidos</p>
             </div>
             <div
               className={`flex flex-row items-center space-x-4 cursor-pointer hover:text-amber-400 ${
                 filtro === "transporte" ? "text-amber-400" : "text-white"
               }`}
-              onClick={() => setFiltro("transporte")}
+              onClick={() => setFiltro("Em transporte")}
             >
               <Truck></Truck>
               <p className=" w-full py-3">Em transporte</p>
@@ -130,6 +139,15 @@ export default function Compras() {
             >
               <CheckCheck></CheckCheck>
               <p className=" w-full py-3">Entregue</p>
+            </div>
+            <div
+              className={`flex flex-row items-center space-x-4 cursor-pointer hover:text-amber-400 ${
+                filtro === "entregue" ? "text-amber-400" : "text-white"
+              }`}
+              onClick={() => setFiltro("Pedido de cancelamento")}
+            >
+              <X></X>
+              <p className=" w-full py-3">Pedido de cancelamento</p>
             </div>
           </div>
         </nav>

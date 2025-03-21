@@ -34,6 +34,9 @@ export class Pedido {
   @Column()
   source: string;
 
+  @Column('simple-array')
+  genero: string[];
+
   @ManyToOne(() => Usuario, (usuario) => usuario.pedidos)
   usuario: Usuario;
 
