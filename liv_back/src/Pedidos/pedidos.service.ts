@@ -84,7 +84,7 @@ export class PedidosService {
     return pedidos;
   }
 
-  async pedidoCancelamento(idPedido: number): Promise<void> {
+  async pedidoCancelamento(idPedido: number, codigo: number): Promise<void> {
     const pedido = await this.pedidosRepository.findOne({
       where: { idPedido },
     });
@@ -92,6 +92,12 @@ export class PedidosService {
     if (!pedido) {
       throw new NotFoundException('Não foi possível encontrar o pedido!');
     }
+
+    const livro = await this.livrosRepository.findOne({ where: { codigo } });
+
+    livro.vendas = livro.vendas - pedido.quantidade;
+
+    await this.livrosRepository.save(livro);
 
     pedido.status = 'Pedido de cancelamento';
 

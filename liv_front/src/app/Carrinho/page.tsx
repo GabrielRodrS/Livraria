@@ -15,11 +15,13 @@ export interface Item {
   quantidade: number;
   usuario: object;
   source: string;
+  livro: object;
 }
 
 export default function Carrinho() {
   const [user, setUser] = useState<userData | null>(null);
   const [itens, setItens] = useState<Item[]>([]);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -27,6 +29,7 @@ export default function Carrinho() {
     if (infoUser) {
       setUser(JSON.parse(infoUser));
     }
+    localStorage.setItem("preco", "0");
   }, []);
 
   useEffect(() => {
@@ -79,7 +82,9 @@ export default function Carrinho() {
             <button
               type="button"
               className="bg-green-500 py-2 px-3 rounded-md cursor-pointer hover:text-amber-400"
-              onClick={() => router.push("/Comprar")}
+              onClick={() => {
+                router.push("/Comprar");
+              }}
             >
               Fazer pedido
             </button>

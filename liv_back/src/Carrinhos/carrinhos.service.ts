@@ -49,7 +49,7 @@ export class CarrinhosService {
   async buscarCarrinhos(usuarioEmail: string): Promise<Carrinho[]> {
     const resultado = await this.carrinhosRepository.find({
       where: { usuario: { email: usuarioEmail } },
-      relations: ['usuario'],
+      relations: ['usuario', 'livro'],
     });
 
     if (resultado.length === 0) {
@@ -103,5 +103,30 @@ export class CarrinhosService {
     await this.carrinhosRepository.remove(carrinho);
 
     return null;
+  }
+
+  async selecionados(id: number): Promise<Carrinho> {
+    const carrinho = await this.carrinhosRepository.findOne({
+      where: { idCarrinho: id },
+      relations: ['livro', 'usuario'],
+    });
+
+    if (!carrinho) {
+      throw new NotFoundException('Item não encontrado!');
+    }
+
+    return carrinho;
+  }
+
+  async limparCarrinho(id: number) {
+    const carrinho = await this.carrinhosRepository.findOne({
+      where: { idCarrinho: id },
+    });
+
+    if (!carrinho) {
+      throw new NotFoundException('Não foi possível excluir este item!');
+    }
+
+    await this.carrinhosRepository.delete(id);
   }
 }

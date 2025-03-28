@@ -11,8 +11,9 @@ export default function PedidoHistorico({ pedido }: PedidoHistoricoProps) {
   const router = useRouter();
 
   const cancelar = async () => {
+    const dados = { idPedido: pedido.idPedido, codigo: pedido.codigo };
     try {
-      axios.patch(`http://localhost:3000/pedidos/cancelar/${pedido.idPedido}`);
+      await axios.patch("http://localhost:3000/pedidos/cancelar", dados);
       window.location.reload();
     } catch (error) {
       console.error("Erro ao pedir cancelamento!", error);
@@ -68,7 +69,11 @@ export default function PedidoHistorico({ pedido }: PedidoHistoricoProps) {
           disabled={pedido.status === "Pedido de cancelamento"}
           type="button"
           className={`bg-red-500 py-2 px-3 rounded-md cursor-pointer text-black hover:text-white mx-5 ${
-            pedido.status === "Pedido de cancelamnto" ? "opacity-50" : null
+            pedido.status === "Pedido de cancelamento" ||
+            pedido.status === "Entregue" ||
+            pedido.status === "Em transporte"
+              ? "opacity-50"
+              : null
           }`}
           onClick={() => {
             cancelar();

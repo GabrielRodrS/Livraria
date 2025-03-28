@@ -1,5 +1,6 @@
 "use client";
 
+import Pesquisa from "./Pesquisa";
 import { Search, ShoppingCart, Album, User } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -69,22 +70,7 @@ export default function Header({ children }: HeaderProps) {
           </button>
           {barra === true && (
             <div className="flex flex-col items-start px-2 space-y-2 py-2 absolute h-max w-[408px] right-133.5 top-14 bg-white rounded-b-md shadow-xl rounded-xl ">
-              <p className="truncate w-full whitespace-nowrap cursor-pointer hover:bg-gray-200 rounded-sm px-1 py-1">
-                Harry jk
-                rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
-              </p>
-              <p className="truncate w-full whitespace-nowrap cursor-pointer hover:bg-gray-200 rounded-sm px-1 py-1">
-                Harry Potter
-              </p>
-              <p className="truncate w-full whitespace-nowrap cursor-pointer hover:bg-gray-200 rounded-sm px-1 py-1">
-                Harry Potter
-              </p>
-              <p className="truncate w-full whitespace-nowrap cursor-pointer hover:bg-gray-200 rounded-sm px-1 py-1">
-                Harry Potter
-              </p>
-              <p className="truncate w-full whitespace-nowrap cursor-pointer hover:bg-gray-200 rounded-sm px-1 py-1">
-                Harry Potter
-              </p>
+              <Pesquisa></Pesquisa>
             </div>
           )}
         </div>

@@ -48,13 +48,13 @@ export default function Compras() {
     buscarPedidos();
   }, [user]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     try {
       axios.get(`http://localhost:3000/buscar/filtro/${filtro}`);
     } catch (error) {
       console.error("Erro ao buscar pedidos por este filtro!", error);
     }
-  }, [filtro]);
+  }, [filtro]);*/
 
   return (
     <Header>

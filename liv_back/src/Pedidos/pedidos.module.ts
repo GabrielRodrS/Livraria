@@ -10,6 +10,6 @@ import { LivrosModule } from 'src/Livros/livros.module';
   imports: [TypeOrmModule.forFeature([Pedido]), UsuariosModule, LivrosModule],
   controllers: [PedidosController],
   providers: [PedidosService],
-  exports: [TypeOrmModule],
+  exports: [PedidosService],
 })
 export class PedidosModule {}

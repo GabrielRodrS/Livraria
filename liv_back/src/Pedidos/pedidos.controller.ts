@@ -19,9 +19,15 @@ export class PedidosController {
     return await this.pedidosService.buscarPedidos(userEmail);
   }
 
-  @Patch('cancelar/:idPedido')
-  async pedidoCancelamento(@Param('idPedido') idPedido: number): Promise<void> {
-    const pedido = await this.pedidosService.pedidoCancelamento(idPedido);
-    return pedido;
+  @Patch('cancelar')
+  async pedidoCancelamento(
+    @Body('idPedido') idPedido: number,
+    @Body('codigo') codigo: number,
+  ): Promise<void> {
+    const pedido = await this.pedidosService.pedidoCancelamento(
+      idPedido,
+      codigo,
+    );
+    return null;
   }
 }
