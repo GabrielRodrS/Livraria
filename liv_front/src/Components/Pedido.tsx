@@ -7,9 +7,15 @@ import React, { useEffect, useState } from "react";
 
 interface PedidoProps {
   item: Item;
+  paraComprar: number[];
+  setParaComprar: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
-export default function Pedido({ item }: PedidoProps) {
+export default function Pedido({
+  item,
+  paraComprar,
+  setParaComprar,
+}: PedidoProps) {
   const router = useRouter();
   const [quantidade, setQuantidade] = useState(0);
   const [selecionados, setSelecionados] = useState<number[]>([]);
@@ -38,6 +44,10 @@ export default function Pedido({ item }: PedidoProps) {
   useEffect(() => {
     setSelecionados((prev) => [...prev, item.idCarrinho]);
   }, [item.idCarrinho]);
+
+  useEffect(() => {
+    setParaComprar((prev) => Array.from(new Set([...prev, item.idCarrinho])));
+  }, [item.idCarrinho, setParaComprar]);
 
   useEffect(() => {
     const precoArmazenado = parseFloat(localStorage.getItem("preco") || "0");
@@ -131,6 +141,10 @@ export default function Pedido({ item }: PedidoProps) {
                   prev.filter((id) => id !== item.idCarrinho)
                 );
 
+                setParaComprar((prev) =>
+                  prev.filter((id) => id !== item.idCarrinho)
+                );
+
                 let total = 0;
 
                 const precoArmazenado = parseFloat(
@@ -183,6 +197,8 @@ export default function Pedido({ item }: PedidoProps) {
               className="text-black bg-gray-300 p-2 rounded-md cursor-pointer hover:text-white "
               onClick={() => {
                 setSelecionados((prev) => [...prev, item.idCarrinho]);
+
+                setParaComprar((prev) => [...prev, item.idCarrinho]);
 
                 let total = 0;
 

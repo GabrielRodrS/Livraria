@@ -21,8 +21,20 @@ export interface Item {
 export default function Carrinho() {
   const [user, setUser] = useState<userData | null>(null);
   const [itens, setItens] = useState<Item[]>([]);
+  const [paraComprar, setParaComprar] = useState<number[]>([]);
 
   const router = useRouter();
+
+  function removerDuplicadosDoLocalStorage() {
+    // Recupera os dados do localStorage (exemplo com um array de números)
+    const dados = JSON.parse(localStorage.getItem("selecionados") || "[]");
+
+    // Remove duplicados utilizando o Set
+    const dadosSemDuplicados = Array.from(new Set(dados));
+
+    // Armazena os dados sem duplicados de volta no localStorage
+    localStorage.setItem("selecionados", JSON.stringify(dadosSemDuplicados));
+  }
 
   useEffect(() => {
     const infoUser = localStorage.getItem("user");
@@ -64,7 +76,12 @@ export default function Carrinho() {
             {itens.length > 0
               ? itens.map((item) =>
                   item.idCarrinho ? (
-                    <Pedido key={item.idCarrinho} item={item}></Pedido>
+                    <Pedido
+                      key={item.idCarrinho}
+                      item={item}
+                      paraComprar={paraComprar}
+                      setParaComprar={setParaComprar}
+                    ></Pedido>
                   ) : null
                 )
               : null}
@@ -83,7 +100,16 @@ export default function Carrinho() {
               type="button"
               className="bg-green-500 py-2 px-3 rounded-md cursor-pointer hover:text-amber-400"
               onClick={() => {
-                router.push("/Comprar");
+                localStorage.setItem(
+                  "selecionados",
+                  JSON.stringify(paraComprar)
+                );
+                console.log(paraComprar);
+                removerDuplicadosDoLocalStorage();
+
+                if (localStorage.getItem("selecionados") !== "[]") {
+                  router.push("/Comprar");
+                }
               }}
             >
               Fazer pedido
