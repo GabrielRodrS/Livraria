@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Livro } from './livros.entity';
-import { Repository } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 
 @Injectable()
 export class LivrosService {
@@ -117,5 +117,17 @@ export class LivrosService {
     }
 
     return pegarLivro;
+  }
+
+  async selecionarPesquisa(pesquisa: string): Promise<Livro[]> {
+    if (!pesquisa || pesquisa.trim() === '') {
+      return [];
+    }
+
+    const pesquisaSanitizada = pesquisa.trim();
+
+    return await this.livrosRepository.find({
+      where: { titulo: Like(`%${pesquisaSanitizada}%`) },
+    });
   }
 }

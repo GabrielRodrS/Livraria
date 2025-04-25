@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Pedido } from './pedidos.entity';
-import { Repository } from 'typeorm';
+import { Repository, ILike } from 'typeorm';
 import { Usuario } from 'src/Usuarios/usuarios.entity';
 import { Livro } from 'src/Livros/livros.entity';
 import { CreatePedidoDto } from './create-pedidos.dto';
@@ -104,5 +104,66 @@ export class PedidosService {
     await this.pedidosRepository.save(pedido);
 
     return null;
+  }
+
+  async buscarFiltro(email: string, filtro: string): Promise<Pedido[]> {
+    if (filtro === 'Quantidade comprada') {
+      const pedidos = await this.pedidosRepository.find({
+        where: { usuario: { email } },
+        relations: ['usuario'],
+        order: { quantidade: 'DESC' },
+      });
+
+      if (pedidos.length === 0) {
+        throw new NotFoundException(
+          'Não foi possível encontrar nenhum pedido!',
+        );
+      }
+
+      return pedidos;
+    }
+
+    if (filtro === 'Preço de compra') {
+      const pedidos = await this.pedidosRepository.find({
+        where: { usuario: { email } },
+        relations: ['usuario'],
+        order: { preco: 'DESC' },
+      });
+
+      if (pedidos.length === 0) {
+        throw new NotFoundException(
+          'Não foi possível encontrar nenhum pedido!',
+        );
+      }
+
+      return pedidos;
+    }
+
+    if (filtro === 'Data recente') {
+      const pedidos = await this.pedidosRepository.find({
+        where: { usuario: { email } },
+        relations: ['usuario'],
+        order: { data: 'DESC' },
+      });
+
+      if (pedidos.length === 0) {
+        throw new NotFoundException(
+          'Não foi possível encontrar nenhum pedido!',
+        );
+      }
+
+      return pedidos;
+    }
+
+    const pedidos = await this.pedidosRepository.find({
+      where: { usuario: { email }, status: filtro },
+      relations: ['usuario'],
+    });
+
+    if (pedidos.length === 0) {
+      throw new NotFoundException('Não foi possível encontrar nenhum pedido!');
+    }
+
+    return pedidos;
   }
 }

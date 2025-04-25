@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { CarrinhosService } from './carrinhos.service';
 import { CarrinhosController } from './carrinhos.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -11,7 +11,7 @@ import { PedidosModule } from 'src/Pedidos/pedidos.module';
   imports: [
     TypeOrmModule.forFeature([Carrinho]),
     LivrosModule,
-    UsuariosModule,
+    forwardRef(() => UsuariosModule),
     PedidosModule,
   ],
   providers: [CarrinhosService],

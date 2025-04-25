@@ -5,6 +5,7 @@ import { FileSpreadsheet } from "lucide-react";
 import Header from "../../Components/Header";
 import Livro from "../../Components/Livro";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
 
 export interface Livro {
   codigo: number;
@@ -20,24 +21,14 @@ export interface Livro {
 }
 
 export default function InterfaceP() {
+  const searchParams = useSearchParams();
+  const pesquisaTermo = searchParams.get("pesquisa") || "";
+
   const [quantPag, setQuantPag] = useState(0);
   const [generoLivro, setGeneroLivro] = useState("");
   const [precoLivro, setPrecoLivro] = useState(0);
   const [livros, setLivros] = useState<Livro[]>([]);
   const [header, setHeader] = useState("");
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/livros/buscar")
-      .then((response) => {
-        setLivros(response.data);
-      })
-      .catch((error) => {
-        console.error(
-          error.response?.data?.message || "Erro ao buscar todos os livros!"
-        );
-      });
-  }, []);
 
   function zerarFiltros() {
     setGeneroLivro("");
@@ -46,47 +37,36 @@ export default function InterfaceP() {
   }
 
   useEffect(() => {
-    const filtroUrl = `http://localhost:3000/livros/buscarFiltro?genero=${generoLivro}&preco=${precoLivro}&paginas=${quantPag}`;
+    let url = "";
+    let params = {};
+
+    if (pesquisaTermo) {
+      url = "http://localhost:3000/livros/pesquisar";
+      params = { pesquisa: pesquisaTermo };
+    } else if (header) {
+      url = `http://localhost:3000/livros/buscarHeader/${header}`;
+    } else if (generoLivro || precoLivro > 0 || quantPag > 0) {
+      url = "http://localhost:3000/livros/buscarFiltro";
+      params = {
+        genero: generoLivro,
+        preco: precoLivro,
+        paginas: quantPag,
+      };
+    } else {
+      url = "http://localhost:3000/livros/buscar";
+    }
 
     axios
-      .get(filtroUrl)
+      .get(url, { params })
       .then((response) => {
         setLivros(response.data);
       })
       .catch((error) => {
         console.error(
-          error.response?.data?.message || "Nenhum livro encontrado!"
+          error.response?.data?.message || "Erro ao buscar livros!"
         );
       });
-  }, [generoLivro, precoLivro, quantPag]);
-
-  useEffect(() => {
-    if (header) {
-      const headerURL = `http://localhost:3000/livros/buscarHeader/${header}`;
-
-      axios
-        .get(headerURL)
-        .then((response) => {
-          setLivros(response.data);
-        })
-        .catch((error) => {
-          console.error(
-            error.response?.data?.message || "Nenhum livro encontrado!"
-          );
-        });
-    } else {
-      axios
-        .get("http://localhost:3000/livros/buscar")
-        .then((response) => {
-          setLivros(response.data);
-        })
-        .catch((error) => {
-          console.error(
-            error.response?.data?.message || "Erro ao buscar todos os livros!"
-          );
-        });
-    }
-  }, [header]);
+  }, [pesquisaTermo, header, generoLivro, precoLivro, quantPag]);
 
   return (
     <Header>
@@ -116,6 +96,7 @@ export default function InterfaceP() {
                 <button
                   type="button"
                   onClick={() => {
+                    setHeader("");
                     setGeneroLivro(generoLivro !== genero ? genero : "");
                   }}
                   key={index}
@@ -158,6 +139,7 @@ export default function InterfaceP() {
                         : "text-black"
                     }`}
                     onClick={() => {
+                      setHeader("");
                       setPrecoLivro(precoLivro !== preco ? preco : 0);
                     }}
                   >
@@ -177,7 +159,10 @@ export default function InterfaceP() {
               max="1000"
               className="w-2/3 accent-amber-700"
               value={quantPag}
-              onChange={(e) => setQuantPag(Number(e.target.value))}
+              onChange={(e) => {
+                setHeader("");
+                setQuantPag(Number(e.target.value));
+              }}
             />
             {quantPag !== 0 && (
               <div className="flex flex-row items-center space-x-2 mt-1">
@@ -198,7 +183,7 @@ export default function InterfaceP() {
         </nav>
 
         <main className="h-10/11 w-11/13">
-          <nav className="w-full h-1/11 bg-amber-400 flex flex-row items-center text-black justify-evenly  font-semibold">
+          <nav className="w-full h-1/11 bg-amber-400 flex flex-row items-center text-black justify-evenly font-semibold">
             {[
               "Mais vendidos",
               "Menores preços",
@@ -208,7 +193,7 @@ export default function InterfaceP() {
             ].map((item, index) => (
               <button
                 key={index}
-                className={`cursor-pointer hover:text-white h-full w-full border-b-1 border-black`}
+                className="cursor-pointer hover:text-white h-full w-full border-b-1 border-black"
                 onClick={() => {
                   zerarFiltros();
                   setHeader(header !== item ? item : "");

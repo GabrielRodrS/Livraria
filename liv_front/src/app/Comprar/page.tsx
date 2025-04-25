@@ -23,7 +23,6 @@ export default function Comprar() {
     const bag = localStorage.getItem("selecionados");
     if (bag) {
       setIds(JSON.parse(bag));
-      console.log(ids);
     }
   }, [preco]);
 
@@ -64,7 +63,7 @@ export default function Comprar() {
           </p>
           <section className="h-2s/7 w-full  flex flex-col items-center justify-center font-semibold">
             <p className="text-amber-700 mb-2 mt-5">
-              Valor da compra: R$ {preco}
+              Valor da compra: R$ {preco.toFixed(2)}
             </p>
             <p>Como deseja efetuar o pagamento? </p>
             <div className="flex flex-row space-x-5">

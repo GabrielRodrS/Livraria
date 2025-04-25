@@ -8,11 +8,10 @@ import { Livro } from "../InterfaceP/page";
 
 export default function Informacoes() {
   const nav1 = "Adicionar ao carrinho";
-  const nav2 = "Comprar produto";
   const navr1 = "/Carrinho";
-  const navr2 = "/Comprar";
   const [codigo, setCodigo] = useState(null);
   const [livro, setLivro] = useState<Livro | null>(null);
+  const [disp, setDisp] = useState<number>(0);
 
   useEffect(() => {
     const cod = localStorage.getItem("codigoLivro");
@@ -21,6 +20,12 @@ export default function Informacoes() {
       setCodigo(JSON.parse(cod));
     }
   }, []);
+
+  useEffect(() => {
+    if (livro?.disponiveis) {
+      setDisp(livro?.disponiveis);
+    }
+  }, [livro]);
 
   useEffect(() => {
     if (codigo) {
@@ -45,13 +50,7 @@ export default function Informacoes() {
 
   return (
     <Header>
-      <InformacoesLivro
-        nav1={nav1}
-        nav2={nav2}
-        navr1={navr1}
-        navr2={navr2}
-        livro={livro}
-      >
+      <InformacoesLivro nav1={nav1} navr1={navr1} livro={livro} disp={disp}>
         <div className="flex flex-col border-b-2 border-black space-y-2 py-3">
           <p className="text-amber-700">Código do livro: {livro?.codigo}</p>
           <p>Quantidade disponível: {livro?.disponiveis}</p>

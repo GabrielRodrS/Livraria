@@ -7,9 +7,9 @@ import { useState, useEffect } from "react";
 
 export default function Informacoes() {
   const nav1 = "Voltar aos pedidos";
-  const nav2 = "Cancelar pedido";
+
   const navr1 = "/Compras";
-  const navr2 = "/Compras";
+
   const [pedido, setPedido] = useState<SelecPedido | null>(null);
 
   useEffect(() => {
@@ -26,13 +26,7 @@ export default function Informacoes() {
   return (
     <Header>
       {pedido && (
-        <InformacoesLivro
-          nav1={nav1}
-          nav2={nav2}
-          navr1={navr1}
-          navr2={navr2}
-          livro={pedido}
-        >
+        <InformacoesLivro nav1={nav1} navr1={navr1} livro={pedido}>
           <div className="flex flex-col border-b-2 border-black space-y-2 py-3">
             <p className="text-amber-700">Código do pedido: {pedido.codigo}</p>
             <p>Preço total: R$ {pedido.preco}</p>

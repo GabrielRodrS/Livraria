@@ -9,21 +9,20 @@ import SelecPedido from "../app/Interfaces/SelecPedido";
 interface InformacoesLivroProps {
   children: ReactNode;
   nav1: string;
-  nav2: string;
   navr1: string;
-  navr2: string;
+  disp: number;
   livro: Livro | SelecPedido;
 }
 export default function InformacoesLivro({
   children,
   nav1,
-  nav2,
   navr1,
-  navr2,
   livro,
+  disp,
 }: InformacoesLivroProps) {
   const router = useRouter();
   const [user, setUser] = useState<userData | null>(null);
+  const msg = "Não disponível para venda!";
 
   useEffect(() => {
     const ls = localStorage.getItem("user");
@@ -67,23 +66,25 @@ export default function InformacoesLivro({
           </div>
           {children}
         </aside>
-        <div className="row-span-1 flex items-center justify-around bg-gray-300">
+        <div className="row-span-1 flex flex-col items-center justify-center bg-gray-300">
           <button
-            className="cursor-pointer p-2 rounded-md text-black hover:text-white bg-amber-500"
+            disabled={disp <= 0}
+            className={`p-2 rounded-md text-black bg-green-500 cursor-pointer
+              ${
+                disp <= 0
+                  ? "opacity-50  cursor-not-allowed"
+                  : "hover:text-white"
+              }
+            `}
             onClick={() => {
               adicionarCarrinho();
             }}
           >
             {nav1}
           </button>
-          <button
-            className={`cursor-pointer p-2 rounded-md text-black hover:text-white  ${
-              nav2 === "Cancelar pedido" ? "bg-red-500" : "bg-green-500"
-            }`}
-            onClick={() => router.push(navr2)}
-          >
-            {nav2}
-          </button>
+          {disp <= 0 && (
+            <p className="font-semibold text-red-700 mt-1">{msg}</p>
+          )}
         </div>
       </main>
     </div>

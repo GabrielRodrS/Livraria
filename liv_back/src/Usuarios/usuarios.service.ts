@@ -7,6 +7,8 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Usuario } from './usuarios.entity';
 import { JwtService } from '@nestjs/jwt';
+import { Pedido } from 'src/Pedidos/pedidos.entity';
+import { Carrinho } from 'src/Carrinhos/carrinhos.entity';
 
 @Injectable()
 export class UsuariosService {
@@ -14,6 +16,12 @@ export class UsuariosService {
     @InjectRepository(Usuario)
     private readonly usuariosRepository: Repository<Usuario>,
     private readonly jwtService: JwtService,
+
+    @InjectRepository(Pedido)
+    private readonly pedidosRepository: Repository<Pedido>,
+
+    @InjectRepository(Carrinho)
+    private readonly carrinhosRepository: Repository<Carrinho>,
   ) {}
 
   async criarUsuarios(
@@ -45,11 +53,27 @@ export class UsuariosService {
       throw new UnauthorizedException('Senha de usuário incorreta!');
     }
 
+    const pedidos = await this.pedidosRepository.find({
+      where: { usuario: { email } },
+      relations: ['usuario'],
+    });
+
+    await this.pedidosRepository.delete({ usuario: { email } });
+
+    const carrinhos = await this.carrinhosRepository.find({
+      where: { usuario: { email } },
+      relations: ['usuario'],
+    });
+
+    await this.carrinhosRepository.delete({ usuario: { email } });
+
     const resultado = await this.usuariosRepository.delete({ email });
 
     if (resultado.affected === 0) {
       throw new NotFoundException('Erro ao deletar usuário!');
     }
+
+    await this.usuariosRepository.delete({ email });
   }
 
   async LogarUsuarios(email: string, senha: string): Promise<Usuario | null> {
@@ -94,21 +118,42 @@ export class UsuariosService {
     email: string,
     senha: string,
   ): Promise<string> {
-    const usuario = await this.usuariosRepository.findOne({ where: { email } });
+    const usuario = await this.usuariosRepository.findOneBy({ email });
 
     if (!usuario) {
-      throw new NotFoundException('Usuário não encontrado!');
-    }
-
-    if (usuario.senha !== senha) {
-      throw new UnauthorizedException('Senha incorreta!');
+      throw new NotFoundException('Usuário não encontrado');
     }
 
     usuario.email = novoEmail;
+    await this.usuariosRepository.save(usuario);
 
-    this.usuariosRepository.update({ email }, { email: novoEmail });
+    const usuarioAtualizado = await this.usuariosRepository.findOneBy({
+      email: novoEmail,
+    });
 
-    return usuario.email;
+    const pedidosAtualizar = await this.pedidosRepository.find({
+      where: { usuario: { email } },
+      relations: ['usuario'],
+    });
+
+    for (const pedido of pedidosAtualizar) {
+      pedido.usuario = usuarioAtualizado;
+      await this.pedidosRepository.save(pedido);
+    }
+
+    const carrinhosAtualizar = await this.carrinhosRepository.find({
+      where: { usuario: { email } },
+      relations: ['usuario'],
+    });
+
+    for (const carrinho of carrinhosAtualizar) {
+      carrinho.usuario = usuarioAtualizado;
+      await this.carrinhosRepository.save(carrinho);
+    }
+
+    this.usuariosRepository.delete({ email });
+
+    return usuarioAtualizado.email;
   }
 
   async altSenha(email: string, senhaNova: string, senhaAtual: string) {

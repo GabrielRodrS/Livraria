@@ -2,6 +2,7 @@ import { IsEmail } from 'class-validator';
 import { Carrinho } from 'src/Carrinhos/carrinhos.entity';
 import { Pedido } from 'src/Pedidos/pedidos.entity';
 import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
+import { Pesquisa } from 'src/pesquisas/pesquisas.entity';
 
 @Entity()
 export class Usuario {
@@ -23,4 +24,7 @@ export class Usuario {
 
   @OneToMany(() => Pedido, (pedido) => pedido.usuario)
   pedidos: Pedido[];
+
+  @OneToMany(() => Pesquisa, (pesquisa) => pesquisa.usuario)
+  pesquisas: Pesquisa[];
 }

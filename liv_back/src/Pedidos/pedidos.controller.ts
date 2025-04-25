@@ -1,4 +1,12 @@
-import { Controller, Post, Get, Patch, Body, Param } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Get,
+  Patch,
+  Body,
+  Param,
+  Query,
+} from '@nestjs/common';
 import { PedidosService } from './pedidos.service';
 import { CreatePedidoDto } from './create-pedidos.dto';
 import { Pedido } from './pedidos.entity';
@@ -29,5 +37,13 @@ export class PedidosController {
       codigo,
     );
     return null;
+  }
+
+  @Post('buscar/filtro')
+  async buscarFiltro(
+    @Body('email') email: string,
+    @Body('filtro') filtro: string,
+  ): Promise<Pedido[]> {
+    return await this.pedidosService.buscarFiltro(email, filtro);
   }
 }

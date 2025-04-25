@@ -75,4 +75,11 @@ export class LivrosController {
     }
     return await this.livrosService.selecionarLivro(codigo);
   }
+
+  @Get('pesquisar')
+  async selecionarPesquisa(
+    @Query('pesquisa') pesquisa: string,
+  ): Promise<Livro[]> {
+    return await this.livrosService.selecionarPesquisa(pesquisa);
+  }
 }
