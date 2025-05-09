@@ -4,7 +4,7 @@ import Header from "../../Components/Header";
 import InformacoesLivro from "../../Components/InformacoesLivro";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Livro } from "../InterfaceP/page";
+import { Livro } from "../../Components/InterfacePContent";
 
 export default function Informacoes() {
   const nav1 = "Adicionar ao carrinho";

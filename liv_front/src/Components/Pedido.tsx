@@ -11,11 +11,7 @@ interface PedidoProps {
   setParaComprar: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
-export default function Pedido({
-  item,
-  paraComprar,
-  setParaComprar,
-}: PedidoProps) {
+export default function Pedido({ item, setParaComprar }: PedidoProps) {
   const router = useRouter();
   const [quantidade, setQuantidade] = useState(0);
   const [selecionados, setSelecionados] = useState<number[]>([]);

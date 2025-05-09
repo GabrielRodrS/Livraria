@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
-import { Livro } from "../app/InterfaceP/page";
+import { Livro } from "../Components/InterfacePContent";
 import axios from "axios";
 import userData from "../app/Interfaces/User";
 import SelecPedido from "../app/Interfaces/SelecPedido";
@@ -10,7 +10,7 @@ interface InformacoesLivroProps {
   children: ReactNode;
   nav1: string;
   navr1: string;
-  disp: number;
+  disp?: number;
   livro: Livro | SelecPedido;
 }
 export default function InformacoesLivro({
@@ -68,10 +68,10 @@ export default function InformacoesLivro({
         </aside>
         <div className="row-span-1 flex flex-col items-center justify-center bg-gray-300">
           <button
-            disabled={disp <= 0}
+            disabled={!disp || disp <= 0}
             className={`p-2 rounded-md text-black bg-green-500 cursor-pointer
               ${
-                disp <= 0
+                !disp || disp <= 0
                   ? "opacity-50  cursor-not-allowed"
                   : "hover:text-white"
               }
@@ -82,7 +82,7 @@ export default function InformacoesLivro({
           >
             {nav1}
           </button>
-          {disp <= 0 && (
+          {disp !== undefined && disp <= 0 && (
             <p className="font-semibold text-red-700 mt-1">{msg}</p>
           )}
         </div>

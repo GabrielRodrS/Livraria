@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { Livro } from "../app/InterfaceP/page";
+import type { Livro } from "../Components/InterfacePContent";
 import { useRouter } from "next/navigation";
 interface LivroProps {
   livro: Livro;
