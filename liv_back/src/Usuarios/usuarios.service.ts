@@ -7,8 +7,8 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Usuario } from './usuarios.entity';
 import { JwtService } from '@nestjs/jwt';
-import { Pedido } from 'src/Pedidos/pedidos.entity';
-import { Carrinho } from 'src/Carrinhos/carrinhos.entity';
+import { Pedido } from '../Pedidos/pedidos.entity';
+import { Carrinho } from '../Carrinhos/carrinhos.entity';
 
 @Injectable()
 export class UsuariosService {
@@ -122,6 +122,10 @@ export class UsuariosService {
 
     if (!usuario) {
       throw new NotFoundException('Usuário não encontrado');
+    }
+
+    if (senha != usuario.senha) {
+      throw new UnauthorizedException('Senha incorreta!');
     }
 
     usuario.email = novoEmail;

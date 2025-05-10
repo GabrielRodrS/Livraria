@@ -1,16 +1,22 @@
-import { Usuario } from 'src/Usuarios/usuarios.entity';
-import { Livro } from 'src/Livros/livros.entity';
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Usuario } from '../Usuarios/usuarios.entity';
+import { Livro } from '../Livros/livros.entity';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity()
 export class Carrinho {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'idcarrinho' })
   idCarrinho: number;
 
   @Column()
   nome: string;
 
-  @Column('decimal')
+  @Column('float') // ou 'decimal', mas tem que garantir compatibilidade com o banco
   preco: number;
 
   @Column()
@@ -20,8 +26,10 @@ export class Carrinho {
   source: string;
 
   @ManyToOne(() => Usuario, (usuario) => usuario.carrinhos)
+  @JoinColumn({ name: 'usuarioEmail' })
   usuario: Usuario;
 
   @ManyToOne(() => Livro, (livro) => livro.carrinhos)
+  @JoinColumn({ name: 'livroCodigo' })
   livro: Livro;
 }

@@ -56,7 +56,7 @@ export class LivrosService {
   async buscarLivros(): Promise<Livro[]> {
     const livros = await this.livrosRepository.find();
 
-    if (livros === null) {
+    if (livros.length === 0) {
       throw new NotFoundException('Nenhum livro encontrado!');
     }
     return livros;
@@ -70,12 +70,12 @@ export class LivrosService {
     const filtrar = this.livrosRepository.createQueryBuilder('livro');
 
     if (genero && genero.trim() !== '') {
-      filtrar.andWhere('livro.genero LIKE :genero', {
-        genero: `%${genero}%`,
+      filtrar.andWhere('livro.genero @> ARRAY[:...genero]', {
+        genero: genero.split(',').map((g) => g.trim()),
       });
     }
 
-    if (typeof preco === 'number' && preco > 0) {
+    if (typeof preco === 'number' && !isNaN(preco) && preco > 0) {
       filtrar.andWhere('livro.preco <= :preco', { preco });
     }
 
@@ -110,7 +110,9 @@ export class LivrosService {
   }
 
   async selecionarLivro(codigo: number): Promise<Livro> {
-    const pegarLivro = this.livrosRepository.findOne({ where: { codigo } });
+    const pegarLivro = await this.livrosRepository.findOne({
+      where: { codigo },
+    });
 
     if (!pegarLivro) {
       throw new NotFoundException('Livro não encontrado no banco!');

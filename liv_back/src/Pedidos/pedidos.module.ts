@@ -3,8 +3,8 @@ import { PedidosController } from './pedidos.controller';
 import { PedidosService } from './pedidos.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Pedido } from './pedidos.entity';
-import { UsuariosModule } from 'src/Usuarios/usuarios.module';
-import { LivrosModule } from 'src/Livros/livros.module';
+import { UsuariosModule } from '../Usuarios/usuarios.module';
+import { LivrosModule } from '../Livros/livros.module';
 
 @Module({
   imports: [

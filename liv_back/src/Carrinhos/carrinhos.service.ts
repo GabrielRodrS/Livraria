@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Carrinho } from './carrinhos.entity';
-import { Livro } from 'src/Livros/livros.entity';
-import { Usuario } from 'src/Usuarios/usuarios.entity';
+import { Livro } from '../Livros/livros.entity';
+import { Usuario } from '../Usuarios/usuarios.entity';
 import { CreateCarrinhoDto } from './create-carrinho.dto';
 
 @Injectable()

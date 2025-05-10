@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Pesquisa } from './pesquisas.entity';
 import { Repository } from 'typeorm';
-import { Usuario } from 'src/Usuarios/usuarios.entity';
+import { Usuario } from '../Usuarios/usuarios.entity';
 import { CreatePesquisaDto } from './create-pesquisa.dto';
 
 @Injectable()

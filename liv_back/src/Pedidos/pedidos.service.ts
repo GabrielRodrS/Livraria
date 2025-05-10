@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Pedido } from './pedidos.entity';
-import { Repository, ILike } from 'typeorm';
-import { Usuario } from 'src/Usuarios/usuarios.entity';
-import { Livro } from 'src/Livros/livros.entity';
+import { Repository } from 'typeorm';
+import { Usuario } from '../Usuarios/usuarios.entity';
+import { Livro } from '../Livros/livros.entity';
 import { CreatePedidoDto } from './create-pedidos.dto';
 
 @Injectable()

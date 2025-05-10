@@ -3,9 +3,9 @@ import { CarrinhosService } from './carrinhos.service';
 import { CarrinhosController } from './carrinhos.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Carrinho } from './carrinhos.entity';
-import { LivrosModule } from 'src/Livros/livros.module';
-import { UsuariosModule } from 'src/Usuarios/usuarios.module';
-import { PedidosModule } from 'src/Pedidos/pedidos.module';
+import { LivrosModule } from '../Livros/livros.module';
+import { UsuariosModule } from '../Usuarios/usuarios.module';
+import { PedidosModule } from '../Pedidos/pedidos.module';
 
 @Module({
   imports: [

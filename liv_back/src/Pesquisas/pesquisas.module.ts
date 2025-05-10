@@ -3,7 +3,7 @@ import { PesquisasService } from './pesquisas.service';
 import { PesquisasController } from './pesquisas.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Pesquisa } from './pesquisas.entity';
-import { UsuariosModule } from 'src/Usuarios/usuarios.module';
+import { UsuariosModule } from '../Usuarios/usuarios.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Pesquisa]), UsuariosModule],

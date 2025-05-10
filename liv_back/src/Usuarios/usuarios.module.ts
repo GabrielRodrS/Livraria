@@ -4,9 +4,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { Usuario } from './usuarios.entity';
 import { UsuariosService } from './usuarios.service';
 import { UsuariosController } from './usuarios.controller';
-import { PedidosModule } from 'src/Pedidos/pedidos.module';
-import { CarrinhosModule } from 'src/Carrinhos/carrinhos.module';
-import { Pesquisa } from 'src/pesquisas/pesquisas.entity';
+import { PedidosModule } from '../Pedidos/pedidos.module';
+import { CarrinhosModule } from '../Carrinhos/carrinhos.module';
+import { Pesquisa } from '../Pesquisas/pesquisas.entity';
 
 @Module({
   imports: [

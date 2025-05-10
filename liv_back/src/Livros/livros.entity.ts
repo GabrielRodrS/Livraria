@@ -1,37 +1,37 @@
 import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
-import { Carrinho } from 'src/Carrinhos/carrinhos.entity';
-import { Pedido } from 'src/Pedidos/pedidos.entity';
+import { Carrinho } from '../Carrinhos/carrinhos.entity';
+import { Pedido } from '../Pedidos/pedidos.entity';
 
 @Entity()
 export class Livro {
   @PrimaryColumn()
   codigo: number;
 
-  @Column()
+  @Column({ nullable: true })
   titulo: string;
 
-  @Column()
+  @Column({ nullable: true })
   disponiveis: number;
 
-  @Column()
+  @Column({ nullable: true })
   autor: string;
 
-  @Column('simple-array')
+  @Column('simple-array', { nullable: true })
   genero: string[];
 
-  @Column('decimal')
+  @Column('decimal', { nullable: true })
   preco: number;
 
-  @Column()
+  @Column({ nullable: true })
   paginas: number;
 
-  @Column()
+  @Column({ nullable: true })
   publicacao: Date;
 
-  @Column({ default: 0 })
+  @Column({ default: 0, nullable: true })
   vendas: number;
 
-  @Column()
+  @Column({ nullable: true })
   source: string;
 
   @OneToMany(() => Carrinho, (carrinho) => carrinho.livro)

@@ -12,8 +12,8 @@ import {
 import { CarrinhosService } from './carrinhos.service';
 import { CreateCarrinhoDto } from './create-carrinho.dto';
 import { Carrinho } from './carrinhos.entity';
-import { PedidosService } from 'src/Pedidos/pedidos.service';
-import { CreatePedidoDto } from 'src/Pedidos/create-pedidos.dto';
+import { PedidosService } from '../Pedidos/pedidos.service';
+import { CreatePedidoDto } from '../Pedidos/create-pedidos.dto';
 
 @Controller('carrinhos')
 export class CarrinhosController {

@@ -1,10 +1,16 @@
-import { Usuario } from 'src/Usuarios/usuarios.entity';
-import { Livro } from 'src/Livros/livros.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Usuario } from '../Usuarios/usuarios.entity';
+import { Livro } from '../Livros/livros.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Pedido {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'idpedido' })
   idPedido: number;
 
   @Column()
@@ -34,12 +40,14 @@ export class Pedido {
   @Column()
   source: string;
 
-  @Column('simple-array')
+  @Column('text', { array: true })
   genero: string[];
 
   @ManyToOne(() => Usuario, (usuario) => usuario.pedidos)
+  @JoinColumn({ name: 'usuarioEmail' })
   usuario: Usuario;
 
   @ManyToOne(() => Livro, (livro) => livro.pedidos)
+  @JoinColumn({ name: 'livroCodigo' })
   livro: Livro;
 }

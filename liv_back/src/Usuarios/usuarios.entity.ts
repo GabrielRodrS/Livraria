@@ -1,8 +1,8 @@
 import { IsEmail } from 'class-validator';
-import { Carrinho } from 'src/Carrinhos/carrinhos.entity';
-import { Pedido } from 'src/Pedidos/pedidos.entity';
+import { Carrinho } from '../Carrinhos/carrinhos.entity';
+import { Pedido } from '../Pedidos/pedidos.entity';
 import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
-import { Pesquisa } from 'src/pesquisas/pesquisas.entity';
+import { Pesquisa } from '../Pesquisas/pesquisas.entity';
 
 @Entity()
 export class Usuario {

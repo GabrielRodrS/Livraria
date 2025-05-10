@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { Usuario } from 'src/Usuarios/usuarios.entity';
+import { Usuario } from '../Usuarios/usuarios.entity';
 
 @Entity()
 export class Pesquisa {
