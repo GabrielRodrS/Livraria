@@ -9,24 +9,43 @@ import { PesquisasModule } from './Pesquisas/pesquisas.module';
 
 @Module({
   imports: [
+    // Carrega o .env e torna acessível globalmente
     ConfigModule.forRoot({
-      isGlobal: true, // Permite acessar as variáveis de qualquer lugar
+      isGlobal: true,
     }),
+
+    // Configuração do TypeORM (dinâmica via .env ou DATABASE_URL)
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get<string>('DB_HOST'),
-        port: configService.get<number>('DB_PORT'),
-        username: configService.get<string>('DB_USER'),
-        password: configService.get<string>('DB_PASSWORD'),
-        database: configService.get<string>('DB_NAME'),
-        autoLoadEntities: true,
-        synchronize: false,
-      }),
+      useFactory: (configService: ConfigService) => {
+        const databaseUrl = configService.get<string>('DATABASE_URL');
+
+        if (databaseUrl) {
+          // Para produção (Render)
+          return {
+            type: 'postgres',
+            url: databaseUrl,
+            autoLoadEntities: true,
+            synchronize: false, // não recomendado true em produção
+          };
+        } else {
+          // Para ambiente local
+          return {
+            type: 'postgres',
+            host: configService.get<string>('DB_HOST'),
+            port: configService.get<number>('DB_PORT'),
+            username: configService.get<string>('DB_USER'),
+            password: configService.get<string>('DB_PASSWORD'),
+            database: configService.get<string>('DB_NAME'),
+            autoLoadEntities: true,
+            synchronize: true, // use com cautela localmente
+          };
+        }
+      },
     }),
 
+    // Seus módulos
     UsuariosModule,
     LivrosModule,
     CarrinhosModule,
@@ -53,33 +72,18 @@ import { PesquisasModule } from './Pesquisas/pesquisas.module';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => {
-        const isProd = process.env.NODE_ENV === 'production';
-
-        if (isProd) {
-          return {
-            type: 'postgres',
-            url: configService.get<string>('DATABASE_URL'),
-            autoLoadEntities: true,
-            synchronize: false,
-            ssl: {
-              rejectUnauthorized: false,
-            },
-          };
-        } else {
-          return {
-            type: 'postgres',
-            host: configService.get<string>('DB_HOST'),
-            port: configService.get<number>('DB_PORT'),
-            username: configService.get<string>('DB_USER'),
-            password: configService.get<string>('DB_PASSWORD'),
-            database: configService.get<string>('DB_NAME'),
-            autoLoadEntities: true,
-            synchronize: false,
-          };
-        }
-      },
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get<string>('DB_HOST'),
+        port: configService.get<number>('DB_PORT'),
+        username: configService.get<string>('DB_USER'),
+        password: configService.get<string>('DB_PASSWORD'),
+        database: configService.get<string>('DB_NAME'),
+        autoLoadEntities: true,
+        synchronize: false,
+      }),
     }),
+
     UsuariosModule,
     LivrosModule,
     CarrinhosModule,
