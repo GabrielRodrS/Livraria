@@ -8,8 +8,6 @@ services:
       - key: NODE_ENV
         value: production
       - key: DATABASE_URL
-        fromDatabase:
-          name: postgresql://livraria_0onm_user:PhDghrSnwyYhUfTtdP5z7YHzOCvAhu7I@dpg-d0h2o3adbo4c73btsp50-a/livraria_0onm
-          property: connectionString
+        value: postgresql://livraria_0onm_user:PhDghrSnwyYhUfTtdP5z7YHzOCvAhu7I@dpg-d0h2o3adbo4c73btsp50-a/livraria_0onm
       - key: FRONTEND_URL
         value: https://portfolio-gabriel-rodrigues-siqueiras-projects.vercel.app/
