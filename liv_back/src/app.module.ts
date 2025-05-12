@@ -1,4 +1,4 @@
-/*import { Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UsuariosModule } from './Usuarios/usuarios.module';
@@ -35,9 +35,8 @@ import { PesquisasModule } from './Pesquisas/pesquisas.module';
   ],
 })
 export class AppModule {}
-*/
 
-import { Module } from '@nestjs/common';
+/*import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UsuariosModule } from './Usuarios/usuarios.module';
@@ -89,3 +88,4 @@ import { PesquisasModule } from './Pesquisas/pesquisas.module';
   ],
 })
 export class AppModule {}
+*/
