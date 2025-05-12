@@ -1,18 +1,35 @@
+
 FROM node:24-alpine AS builder
 LABEL maintainer="GabrielRS"
-WORKDIR /livrariaback
-COPY package*.json ./
+
+WORKDIR /app
+
+
+COPY liv_back/package*.json ./
 RUN npm install
-COPY . .
-RUN npm install -g @nestjs/cli
-RUN nest build
+
+
+COPY liv_back .
+
+
+RUN npm install --save @nestjs/cli
+
+
+RUN npx nest build
+
 
 FROM node:24-alpine
-WORKDIR /livrariaback
-COPY package*.json ./
+
+WORKDIR /app
+
+
+COPY liv_back/package*.json ./
 RUN npm install --omit=dev
-COPY --from=builder /livrariaback/dist ./dist
-COPY --from=builder /livrariaback/node_modules ./node_modules
+
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+
 EXPOSE 3000
 ENV PORT=3000
+
 CMD ["node", "dist/main"]
