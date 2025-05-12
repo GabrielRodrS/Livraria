@@ -28,7 +28,7 @@ export default function Login() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/usuarios/login",
+        `${process.env.NEXT_PUBLIC_API_URL}/usuarios/login`,
         dados
       );
 
@@ -36,7 +36,7 @@ export default function Login() {
       localStorage.setItem("token", token);
 
       const userResponse = await axios.get(
-        "http://localhost:3000/usuarios/auth",
+        `${process.env.NEXT_PUBLIC_API_URL}/usuarios/auth`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 

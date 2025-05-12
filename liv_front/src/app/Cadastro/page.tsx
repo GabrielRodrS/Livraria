@@ -49,7 +49,7 @@ export default function Cadastro() {
 
     try {
       console.log(dados);
-      await axios.post("http://localhost:3000/usuarios", dados, {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/usuarios`, dados, {
         headers: {
           "Content-Type": "application/json",
         },
