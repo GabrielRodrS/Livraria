@@ -13,7 +13,7 @@ COPY liv_back .
 
 
 RUN npm install --save @nestjs/cli
-
+RUN npm install class-validator class-transformer
 
 RUN npx nest build
 
