@@ -19,17 +19,17 @@ CREATE TABLE IF NOT EXISTS livro (
 
 INSERT INTO livro (codigo, titulo, disponiveis, autor, genero, preco, paginas, publicacao, vendas, source)
 VALUES
-    (11, 'Nova Ordem Mundial', 7, 'Piton', ARRAY['Filosofia'], 273.99, 364, '2014-01-29', 2, '/livro11.jpg'),
-    (12, 'Morcego', 27, 'DesCe', ARRAY['Graphic Novel/HQs', 'Fantasia', 'Romance'], 114.99, 178, '2025-03-12', 5, '/livro12.jpg'),
-    (10, 'Baby Shark', 2, 'Kids', ARRAY['Infantil'], 12.99, 80, '2023-03-13', 11, '/livro10.jpg'),
+    (11, 'Filosofia', 7, 'Piton', ARRAY['Filosofia'], 273.99, 364, '2014-01-29', 2, '/livro11.jpg'),
+    (12, 'Bat', 27, 'DesCe', ARRAY['Graphic Novel/HQs', 'Fantasia', 'Romance'], 114.99, 178, '2025-03-12', 5, '/livro12.jpg'),
+    (10, 'Tubarão', 2, 'Kids', ARRAY['Infantil'], 12.99, 80, '2023-03-13', 11, '/livro10.jpg'),
     (1, 'Livro Mofado', 12, 'Robson', ARRAY['Biografia'], 14.99, 97, '2022-09-25', 5, '/livro1.jpg'),
-    (7, 'Maçã Capitalista', 6, 'Steve Jobs', ARRAY['Biografia', 'História', 'Ficção Científica'], 67.99, 189, '2016-01-03', 6, '/livro7.jpg'),
-    (8, 'Flow Origens', 16, 'Flow', ARRAY['História', 'Fantasia', 'Aventura e Ação', 'Infantil'], 62.99, 149, '2020-06-13', 18, '/livro8.jpg'),
-    (4, 'Bruxaria', 3, 'Le Blanc', ARRAY['Suspense', 'Religioso'], 21.59, 205, '2019-03-19', 5, '/livro4.jpg'),
-    (5, 'Invocação do Mal', 14, 'Claudemir Mínimo', ARRAY['Suspense', 'Terror', 'História'], 67.99, 165, '2018-11-02', 6, '/livro5.jpg'),
-    (6, 'História da Marijuana', 24, 'Zóio', ARRAY['Ciência e Tecnologia', 'História'], 67.99, 123, '2025-03-05', 4, '/livro6.jpg'),
-    (3, 'Xadrezki', 100, 'Deschk', ARRAY['História', 'Religioso'], 34.59, 217, '2024-03-19', 7, '/livro3.jpg'),
-    (9, 'Mengooo', 16, 'Gabigol', ARRAY['História', 'Biografia'], 104.99, 259, '2022-08-13', 5, '/livro9.jpg'),
+    (7, 'Apple', 6, 'Steve Jobs', ARRAY['Biografia', 'História', 'Ficção Científica'], 67.99, 189, '2016-01-03', 6, '/livro7.jpg'),
+    (8, 'Flow', 16, 'Flow', ARRAY['História', 'Fantasia', 'Aventura e Ação', 'Infantil'], 62.99, 149, '2020-06-13', 18, '/livro8.jpg'),
+    (4, 'Receitas', 3, 'Le Blanc', ARRAY['Suspense', 'Religioso'], 21.59, 205, '2019-03-19', 5, '/livro4.jpg'),
+    (5, 'Segredos', 14, 'Claudemir Mínimo', ARRAY['Suspense', 'Terror', 'História'], 67.99, 165, '2018-11-02', 6, '/livro5.jpg'),
+    (6, 'Plantas', 24, 'Zóio', ARRAY['Ciência e Tecnologia', 'História'], 67.99, 123, '2025-03-05', 4, '/livro6.jpg'),
+    (3, 'Xadrez', 100, 'Deschk', ARRAY['História', 'Religioso'], 34.59, 217, '2024-03-19', 7, '/livro3.jpg'),
+    (9, 'Flamengo', 16, 'Gabigol', ARRAY['História', 'Biografia'], 104.99, 259, '2022-08-13', 5, '/livro9.jpg'),
     (2, 'Livro Rústico', 21, 'Renata', ARRAY['Poesia', 'Filosofia'], 24.99, 122, '2025-01-19', 11, '/livro2.jpg');
 
 CREATE TABLE IF NOT EXISTS usuario (
