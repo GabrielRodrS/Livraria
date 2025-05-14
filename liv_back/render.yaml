@@ -10,4 +10,4 @@ services:
       - key: DATABASE_URL
         value: postgresql://livraria_0onm_user:PhDghrSnwyYhUfTtdP5z7YHzOCvAhu7I@dpg-d0h2o3adbo4c73btsp50-a/livraria_0onm
       - key: FRONTEND_URL
-        value: https://portfolio-gabriel-rodrigues-siqueiras-projects.vercel.app/
+        value: https://sistema-para-venda-de-livros.vercel.app/
